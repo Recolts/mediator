@@ -2,17 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
 
-body {
-}
+@layer base {
+  .ty-outline {
+    @apply font-medium text-[8.19px] leading-[120%];
+  }
+  .ty-subtext {
+    @apply font-medium text-[10.24px] leading-[120%];
+  }
+  .ty-subtitle {
+    @apply font-normal text-[12.80px] leading-[120%];
+  }
+  .ty-descriptions {
+    @apply font-normal text-[16px] leading-[120%];
+  }
+  .ty-title {
+    @apply text-[16px] font-bold leading-[120%];
+  }
+  .ty-subheading {
+    @apply text-[20px] font-normal leading-[120%];
+  }
+  .ty-h6 {
+    @apply text-[20px] font-extrabold leading-[120%];
+  }
+  .ty-h5 {
+    @apply text-[25px] font-extrabold leading-[120%];
+  }
+  .ty-h4 {
+    @apply text-[31.25px] font-bold leading-[120%];
+  }
+  .ty-h3 {
+    @apply text-[39.06px] font-bold leading-[120%];
+  }
+  .ty-h2 {
+    @apply text-[48.83px] font-semibold leading-[120%];
+  }
+  .ty-h1 {
+    @apply text-[61.04px] font-semibold leading-[120%];
+  }
+  .ty-display {
+    @apply text-[96px] font-medium leading-[120%];
+  }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .connect-wallet-bg {
+    border-radius: 8px;
+background: radial-gradient(58.81% 100% at 50.39% 0%, #3A99EF 0%, #005FB5 100%);
+  }
+
+  .input-bg{
+    border-radius: 8px;
+    border-color: rgba(250, 252, 255, 0.08);
+    background: rgba(250, 252, 255, 0.08);
+  }
+
+  body {
+    @apply bg-black-100;
   }
 }
