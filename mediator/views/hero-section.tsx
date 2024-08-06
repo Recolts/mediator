@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Tabs } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React from "react";
 
 const HeroSection = () => {
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center p-2">
       <div className="flex flex-col items-start justify-start gap-8 max-w-[960px] px-4 lg:px-8 lg:pb-8 lg:pt-[306px] grow w-full">
         <div className="flex flex-col gap-4 max-w-[636px] w-full">
           <h1 className="ty-h6 sm:ty-h4 lg:ty-h1 text-white-100">
@@ -25,10 +25,22 @@ const HeroSection = () => {
           <h1 className="ty-subtext text-white-12">OR</h1>
           <Button variant={"default"}>Create an Escrow</Button>
         </div>
-        <div className="flex gap-4 max-w-[896px]">
-          <div className="flex gap-4 w-full">
-            <Tabs></Tabs>
+        <div className="flex gap-4 max-w-[896px] w-full">
+          <div className="flex gap-4">
+            <Tabs defaultValue="account" className="w-[480px]">
+              <TabsList>
+                <TabsTrigger value="Public Bidding">Public Bidding</TabsTrigger>
+                <TabsTrigger value="My Escrow">My Escrow</TabsTrigger>
+              </TabsList>
+              {/* <TabsContent value="account">
+                Make changes to your account here.
+              </TabsContent>
+              <TabsContent value="password">
+                Change your password here.
+              </TabsContent> */}
+            </Tabs>
           </div>
+          <div className="flex bg-white-100">Hello</div>
         </div>
       </div>
     </div>
