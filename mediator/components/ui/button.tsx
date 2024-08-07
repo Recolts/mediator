@@ -10,7 +10,10 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "border border-blue-50 bg-blue-100 text-white-100 p-2",
-        connectwallet: "connect-wallet-bg text-white-100 p-2 hover:bg-blue-100",
+        outline:
+          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+        connectwallet:
+          "connect-wallet-bg text-white-100 px-3.5 py-2 hover:bg-blue-100",
       },
       size: {
         default: "p-2",
