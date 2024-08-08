@@ -14,9 +14,9 @@ function Navbar({}: INavbarProps) {
     setopen((state) => !state);
   };
   return (
-    <div className="flex justify-center w-full p-8">
+    <div className="flex justify-center w-full p-8 top-0 sticky z-50 bg-black-16 backdrop-blur-2xl">
       <div className="flex w-[960px] justify-between">
-        <Image src={logo} alt={""}></Image>
+        <Image src={logo} alt={""} className="h-[2rem]"></Image>
         <div className="flex border rounded-xl p-1 border-blue-50">
           <Button variant={"connectwallet"}>Connect Wallet</Button>
         </div>
