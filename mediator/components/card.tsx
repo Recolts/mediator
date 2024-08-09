@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 export default function card() {
   return (
-    <div className="flex flex-col border rounded-2xl bg-white-4 border-white-4 p-4 gap-4 grow">
+    <div className="flex flex-col border rounded-2xl bg-white-4 border-white-4 p-4 gap-4">
       <div className="flex justify-between grow gap-2">
         <div className="flex border rounded-[999px] bg-yellow-4 border-yellow-8 text-yellow-100 ty-subtitle py-2 px-3">
           Unclaimed
@@ -54,8 +54,7 @@ export default function card() {
 
       <Button
         variant={"default"}
-        className="ty-title p-3.5 text-white-100 bg-white-16"
-      >
+        className="ty-title p-3.5 text-white-100 bg-white-16">
         Claim bidding
       </Button>
     </div>
