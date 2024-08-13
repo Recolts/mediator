@@ -11,7 +11,7 @@ const HeroSection = () => {
   return (
     <div className="flex bg-white-4 justify-center items-start min-h-[100dvh]">
       <div className="flex flex-col gap-8 max-w-[960px] pt-[calc(.4*100dvh)] grow">
-        <div className="hero flex flex-col gap-8 items-start bg-white-4 grow">
+        <div className="hero flex flex-col gap-8 items-start grow">
           <div className="flex flex-col gap-4 max-w-[636px] w-full">
             <h1 className="ty-h6 sm:ty-h4 lg:ty-h1 text-white-100">
               Escrow your tokens, name your price.

@@ -4,7 +4,17 @@ import icon1 from "@/public/icons/Bonk.png";
 import icon2 from "@/public/icons/Sol.png";
 import icon3 from "@/public/icons/copy-01.svg";
 import { Button } from "@/components/ui/button";
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 export default function card() {
   return (
     <div className="flex flex-col border rounded-2xl bg-white-4 border-white-4 p-4 gap-4">
@@ -51,12 +61,67 @@ export default function card() {
           <h1 className="ty-descriptions text-white-100 ">cryptofonzy.sol</h1>
         </div>
       </div>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button
+            variant={"default"}
+            className="ty-title p-3.5 text-white-100 bg-white-16"
+          >
+            Claim bidding
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            {/* <AlertDialogTitle>Create an Escrow</AlertDialogTitle> */}
+            <AlertDialogDescription className="flex flex-col gap-4">
+              <p className="ty-subtext text-white-50">Create an Escrow</p>
+              <div className="p-4 bg-white-50 flex items-center justify-between rounded-xl">
+                <p>586,129,222.02</p>
+                <Button
+                  variant={"default"}
+                  className="ty-title p-3.5 text-white-100 bg-white-16 gap-1"
+                >
+                  <Image src={icon1} alt="Bonk Icon" />
+                  Bonk
+                </Button>
+              </div>
+              <div className="flex justify-center">
+                <p>for</p>
+              </div>
 
-      <Button
-        variant={"default"}
-        className="ty-title p-3.5 text-white-100 bg-white-16">
-        Claim bidding
-      </Button>
+              <div className="p-4 bg-white-50 flex items-center justify-between rounded-xl">
+                <p>0</p>
+                <Button
+                  variant={"default"}
+                  className="ty-title p-3.5 text-white-100 bg-white-16 gap-1"
+                >
+                  <Image src={icon2} alt="Bonk Icon" />
+                  SOL
+                </Button>
+              </div>
+              <div className="flex items-center gap-4">
+                <p>Program ID</p>
+                <p>0x132..a9s</p>
+              </div>
+              <div className="flex items-center gap-4">
+                <p>Escrow Creator</p>
+                <p>0x132..a9s</p>
+              </div>
+
+              <Button
+                variant={"default"}
+                className="ty-title p-3.5 text-black-100 bg-white-100"
+              >
+                Approve Contract
+              </Button>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          {/* <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction>Continue</AlertDialogAction>
+          </AlertDialogFooter> */}
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
