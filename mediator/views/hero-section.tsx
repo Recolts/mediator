@@ -7,6 +7,27 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React from "react";
 
+const cards = [
+  {
+    status: "Unclaimed",
+    amount: 12415,
+    currency: "Bonk",
+    forAmount: 1,
+    forCurrency: "SOL",
+    programId: "0x132..a9s",
+    escrowCreator: "0x132..a9s",
+  },
+  {
+    status: "Claimed",
+    amount: 125,
+    currency: "SOL",
+    forAmount: 2,
+    forCurrency: "Mabaho",
+    programId: "0x132..a9s",
+    escrowCreator: "0x132..a9s",
+  },
+];
+
 const HeroSection = () => {
   return (
     <div className="flex bg-white-4 justify-center items-start min-h-[100dvh]">
@@ -63,10 +84,18 @@ const HeroSection = () => {
             </div>
           </div>
           <div className="flex flex-wrap gap-4 scroll-auto overflow-hidden">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {cards.map((data, i) => (
+              <Card
+                key={i}
+                status={data.status}
+                amount={data.amount}
+                currency={data.currency}
+                forAmount={data.forAmount}
+                forCurrency={data.forCurrency}
+                programId={data.programId}
+                escrowCreator={data.escrowCreator}
+              />
+            ))}
           </div>
         </div>
       </div>
