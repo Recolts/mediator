@@ -52,7 +52,7 @@ export default function CreateEscrow() {
           Create an Escrow
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="max-w-[500px]">
+      <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center justify-between">
             <p className="ty-subtext text-white-50"> Create an Escrow</p>
@@ -62,17 +62,19 @@ export default function CreateEscrow() {
             </AlertDialogCancel>
           </AlertDialogTitle>
 
-          <AlertDialogDescription className="flex flex-col gap-4">
-            <div className="w-full flex items-center justify-between bg-white-4 rounded-lg p-4 gap-4">
-              <Input className="w-full bg-transparent rounded-none border-none ring-0 flex-1"></Input>
+          <AlertDialogDescription className="flex flex-col gap-2">
+            <div className="grow flex items-center backdrop-blur-lg bg-white-4 rounded-lg p-3 gap-3 ease-out duration-300 hover:ring-2 hover:ring-white-16 cursor-pointer has-[:focus]:bg-white-8 has-[:focus]:ring-2 has-[:focus]:ring-blue-100">
+              <Input
+                type="number"
+                min={0}
+                className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"></Input>
               <Popover open={fromMintOpen} onOpenChange={setFromMintOpen}>
                 <PopoverTrigger asChild>
                   <Button
-                    variant="default"
+                    variant="tokenDropdown"
                     role="fromCombobox"
                     aria-expanded={fromMintOpen}
-                    className="justify-between gap-2"
-                  >
+                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
                     <Avatar className="h-4 w-4">
                       <AvatarImage src="https://github.com/shadcn.png" />
                       <AvatarFallback>CN</AvatarFallback>
@@ -81,11 +83,11 @@ export default function CreateEscrow() {
                       ? frameworks.find(
                           (framework) => framework.value === fromMint
                         )?.label
-                      : "BONK"}
-                    <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      : "Select a coin"}
+                    <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="min-w-[128px] p-0">
                   <Command>
                     {/* <CommandInput placeholder="Search framework..." /> */}
                     <CommandList>
@@ -95,16 +97,20 @@ export default function CreateEscrow() {
                           <CommandItem
                             key={framework.value}
                             value={framework.value}
+                            className={
+                              fromMint === framework.value
+                                ? "bg-blue-100 hover:bg-blue-50"
+                                : ""
+                            }
                             onSelect={(currentValue) => {
                               setFromMint(
                                 currentValue === fromMint ? "" : currentValue
                               );
                               setFromMintOpen(false);
-                            }}
-                          >
+                            }}>
                             <Check
                               className={cn(
-                                "mr-2 h-4 w-4",
+                                "h-4 w-4",
                                 fromMint === framework.value
                                   ? "opacity-100"
                                   : "opacity-0"
@@ -119,17 +125,21 @@ export default function CreateEscrow() {
                 </PopoverContent>
               </Popover>
             </div>
-            <p className="text-center">for</p>
-            <div className="w-full flex items-center justify-between bg-white-4 rounded-lg p-4 gap-4">
-              <Input className="w-full bg-transparent rounded-none border-none ring-0 flex-1"></Input>
+
+            <p className="text-center text-white-16 ty-description">for</p>
+
+            <div className="grow flex items-center backdrop-blur-lg bg-white-4 rounded-lg p-3 gap-3 ease-out duration-300 hover:ring-2 hover:ring-white-16 cursor-pointer has-[:focus]:bg-white-8 has-[:focus]:ring-2 has-[:focus]:ring-blue-100">
+              <Input
+                type="number"
+                min={0}
+                className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"></Input>
               <Popover open={toMintOpen} onOpenChange={setToMintOpen}>
                 <PopoverTrigger asChild>
                   <Button
-                    variant="default"
-                    role="toCombobox"
+                    variant="tokenDropdown"
+                    role="fromCombobox"
                     aria-expanded={toMintOpen}
-                    className="justify-between gap-2"
-                  >
+                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
                     <Avatar className="h-4 w-4">
                       <AvatarImage src="https://github.com/shadcn.png" />
                       <AvatarFallback>CN</AvatarFallback>
@@ -138,11 +148,11 @@ export default function CreateEscrow() {
                       ? frameworks.find(
                           (framework) => framework.value === toMint
                         )?.label
-                      : "Bonk"}
-                    <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      : "Select a coin"}
+                    <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="min-w-[128px] p-0">
                   <Command>
                     {/* <CommandInput placeholder="Search framework..." /> */}
                     <CommandList>
@@ -152,16 +162,20 @@ export default function CreateEscrow() {
                           <CommandItem
                             key={framework.value}
                             value={framework.value}
+                            className={
+                              toMint === framework.value
+                                ? "bg-blue-100 hover:bg-blue-50"
+                                : ""
+                            }
                             onSelect={(currentValue) => {
                               setToMint(
                                 currentValue === toMint ? "" : currentValue
                               );
                               setToMintOpen(false);
-                            }}
-                          >
+                            }}>
                             <Check
                               className={cn(
-                                "mr-2 h-4 w-4",
+                                "h-4 w-4",
                                 toMint === framework.value
                                   ? "opacity-100"
                                   : "opacity-0"
@@ -189,8 +203,7 @@ export default function CreateEscrow() {
 
             <Button
               variant={"default"}
-              className="ty-title p-3.5 bg-white-100 text-black-100"
-            >
+              className="ty-title p-3.5 bg-white-100 text-black-100">
               Approve Contract
             </Button>
           </AlertDialogDescription>

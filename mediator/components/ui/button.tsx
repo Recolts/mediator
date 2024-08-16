@@ -5,20 +5,21 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap p-1 rounded-lg ty-title transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default: "bg-white-4 text-primary-foreground hover:bg-primary/90",
         button1: "border border-blue-50 bg-blue-100 text-white-100 p-2",
         button2: "bg-transparent",
+        tokenDropdown: "",
         outline:
           "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
         connectwallet:
           "connect-wallet-bg font-semibold text-white-100 px-3.5 py-2 hover:bg-blue-100",
       },
       size: {
-        default: "p-2",
+        default: "",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
