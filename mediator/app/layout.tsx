@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "../public/logo.png";
 import { outfit } from "@/public/fonts";
+import Providers from "@/components/providers";
 
 export const metadata: Metadata = {
   title: "mediator.",
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={outfit.className}>{children}</body>
+      <body className={outfit.className}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

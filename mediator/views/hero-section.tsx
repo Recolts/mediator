@@ -6,6 +6,7 @@ import { ComboboxDemo } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React from "react";
+import CreateEscrow from "./create-escrow";
 
 const cards = [
   {
@@ -53,9 +54,7 @@ const HeroSection = () => {
             </div>
             <h1 className="ty-subtext text-white-12">OR</h1>
             <div className="flex p-1 border rounded-xl border-blue-50">
-              <Button variant={"button1"} className="ty-title p-3.5">
-                Create an Escrow
-              </Button>
+              <CreateEscrow />
             </div>
           </div>
         </div>

@@ -90,7 +90,8 @@ const Card = ({
         <AlertDialogTrigger asChild>
           <Button
             variant={"default"}
-            className="ty-title p-3.5 text-white-100 bg-white-16">
+            className="ty-title p-3.5 text-white-100 bg-white-16"
+          >
             Claim bidding
           </Button>
         </AlertDialogTrigger>
@@ -106,10 +107,12 @@ const Card = ({
               <div className="p-4 bg-white-50 flex items-center justify-between rounded-xl">
                 <input
                   value={amount}
-                  className="bg-none text-black-100"></input>
+                  className="bg-none text-black-100"
+                ></input>
                 <Button
                   variant={"default"}
-                  className="ty-title p-3.5 text-white-100 bg-white-16 gap-1">
+                  className="ty-title p-3.5 text-white-100 bg-white-16 gap-1"
+                >
                   <Image src={icon1} alt="Bonk Icon" />
                   {currency}
                 </Button>
@@ -122,7 +125,8 @@ const Card = ({
                 <p>{forAmount}</p>
                 <Button
                   variant={"default"}
-                  className="ty-title p-3.5 text-white-100 bg-white-16 gap-1">
+                  className="ty-title p-3.5 text-white-100 bg-white-16 gap-1"
+                >
                   <Image src={icon2} alt="SOL Icon" />
                   {forCurrency}
                 </Button>
@@ -138,7 +142,8 @@ const Card = ({
 
               <Button
                 variant={"default"}
-                className="ty-title p-3.5 text-black-100 bg-white-100">
+                className="ty-title p-3.5 text-black-100 bg-white-100"
+              >
                 Approve Contract
               </Button>
               {/* 
