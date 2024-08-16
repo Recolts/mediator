@@ -55,20 +55,20 @@ export default function CreateEscrow() {
       <AlertDialogContent className="max-w-[500px]">
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center justify-between">
-            <p> Create an Escrow</p>
+            <p className="ty-subtext text-white-50"> Create an Escrow</p>
 
             <AlertDialogCancel>
-              <X />
+              <X className="text-white-50 h-3.5 w-3.5 bg-inherit" />
             </AlertDialogCancel>
           </AlertDialogTitle>
 
           <AlertDialogDescription className="flex flex-col gap-4">
-            <div className="w-full flex items-center justify-between bg-white-4 p-4 gap-4">
-              <Input className="w-full bg-white-4 rounded-none border-none ring-0 flex-1"></Input>
+            <div className="w-full flex items-center justify-between bg-white-4 rounded-lg p-4 gap-4">
+              <Input className="w-full bg-transparent rounded-none border-none ring-0 flex-1"></Input>
               <Popover open={fromMintOpen} onOpenChange={setFromMintOpen}>
                 <PopoverTrigger asChild>
                   <Button
-                    variant="outline"
+                    variant="default"
                     role="fromCombobox"
                     aria-expanded={fromMintOpen}
                     className="justify-between gap-2"
@@ -81,7 +81,7 @@ export default function CreateEscrow() {
                       ? frameworks.find(
                           (framework) => framework.value === fromMint
                         )?.label
-                      : "Bonk"}
+                      : "BONK"}
                     <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>
@@ -120,12 +120,12 @@ export default function CreateEscrow() {
               </Popover>
             </div>
             <p className="text-center">for</p>
-            <div className="w-full flex items-center justify-between bg-white-4 p-4 gap-4">
-              <Input className="w-full bg-white-4 rounded-none border-none ring-0 flex-1"></Input>
+            <div className="w-full flex items-center justify-between bg-white-4 rounded-lg p-4 gap-4">
+              <Input className="w-full bg-transparent rounded-none border-none ring-0 flex-1"></Input>
               <Popover open={toMintOpen} onOpenChange={setToMintOpen}>
                 <PopoverTrigger asChild>
                   <Button
-                    variant="outline"
+                    variant="default"
                     role="toCombobox"
                     aria-expanded={toMintOpen}
                     className="justify-between gap-2"
@@ -187,8 +187,11 @@ export default function CreateEscrow() {
               </div>
             </div>
 
-            <Button variant={"button1"} className="ty-title p-3.5">
-              Initialize Escrow
+            <Button
+              variant={"default"}
+              className="ty-title p-3.5 bg-white-100 text-black-100"
+            >
+              Approve Contract
             </Button>
           </AlertDialogDescription>
         </AlertDialogHeader>

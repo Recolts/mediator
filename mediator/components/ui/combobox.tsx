@@ -21,24 +21,24 @@ import {
 
 const frameworks = [
   {
-    value: "next.js",
-    label: "Next.js",
+    value: "BONK",
+    label: "BONK",
   },
   {
-    value: "sveltekit",
-    label: "SvelteKit",
+    value: "SOL",
+    label: "SOL",
   },
   {
-    value: "nuxt.js",
-    label: "Nuxt.js",
+    value: "USDC",
+    label: "USDC",
   },
   {
-    value: "remix",
-    label: "Remix",
+    value: "BTC",
+    label: "BTC",
   },
   {
-    value: "astro",
-    label: "Astro",
+    value: "ETH",
+    label: "ETH",
   },
 ];
 
@@ -62,7 +62,7 @@ export function ComboboxDemo() {
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." />
+          <CommandInput placeholder="Search coin" />
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>

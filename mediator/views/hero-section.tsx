@@ -73,7 +73,6 @@ const HeroSection = () => {
             <div className="flex gap-2">
               <ComboboxDemo />
               <ComboboxDemo />
-
               <div className="flex items-center border rounded-lg border-white-8 gap-2 py-2 pr-3 pl-2 bg-white-4">
                 <Image src={search} alt="copy icon" />
                 <h1 className="ty-descriptions text-white-32 text-nowrap">

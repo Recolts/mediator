@@ -9,9 +9,9 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+        default: "bg-white-4 text-primary-foreground hover:bg-primary/90",
         button1: "border border-blue-50 bg-blue-100 text-white-100 p-2",
+        button2: "bg-transparent",
         outline:
           "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
         connectwallet:

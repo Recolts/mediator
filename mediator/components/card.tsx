@@ -86,74 +86,12 @@ const Card = ({
         </div>
       </div>
 
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button
-            variant={"default"}
-            className="ty-title p-3.5 text-white-100 bg-white-16"
-          >
-            Claim bidding
-          </Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogDescription className="flex flex-col gap-4 relative">
-              <div className="flex justify-between">
-                <p className="ty-subtext text-white-50">Create an Escrow</p>
-                <button className="p-2">
-                  <Image src={cancel} alt="Cancel Icon" />
-                </button>
-              </div>
-              <div className="p-4 bg-white-50 flex items-center justify-between rounded-xl">
-                <input
-                  value={amount}
-                  className="bg-none text-black-100"
-                ></input>
-                <Button
-                  variant={"default"}
-                  className="ty-title p-3.5 text-white-100 bg-white-16 gap-1"
-                >
-                  <Image src={icon1} alt="Bonk Icon" />
-                  {currency}
-                </Button>
-              </div>
-              <div className="flex justify-center">
-                <p>for</p>
-              </div>
-
-              <div className="p-4 bg-white-50 flex items-center justify-between rounded-xl">
-                <p>{forAmount}</p>
-                <Button
-                  variant={"default"}
-                  className="ty-title p-3.5 text-white-100 bg-white-16 gap-1"
-                >
-                  <Image src={icon2} alt="SOL Icon" />
-                  {forCurrency}
-                </Button>
-              </div>
-              <div className="flex items-center gap-4">
-                <p>Program ID</p>
-                <p>{programId}</p>
-              </div>
-              <div className="flex items-center gap-4">
-                <p>Escrow Creator</p>
-                <p>{escrowCreator}</p>
-              </div>
-
-              <Button
-                variant={"default"}
-                className="ty-title p-3.5 text-black-100 bg-white-100"
-              >
-                Approve Contract
-              </Button>
-              {/* 
-              <div className="mt-4 p-4 bg-black-50 rounded-xl">
-                <pre>{JSON.stringify(jsonObject, null, 2)}</pre>
-              </div> */}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-        </AlertDialogContent>
-      </AlertDialog>
+      <Button
+        variant={"default"}
+        className="ty-title p-3.5 text-white-100 bg-white-16"
+      >
+        Claim bidding
+      </Button>
     </div>
   );
 };
