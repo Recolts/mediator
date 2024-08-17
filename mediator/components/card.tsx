@@ -13,6 +13,7 @@ import {
   AlertDialogHeader,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Check, CheckCircle, CheckCircle2Icon } from "lucide-react";
 
 type jsonObject = {
   status: string;
@@ -37,8 +38,9 @@ const Card = ({
     <div className="flex flex-col border rounded-2xl bg-white-4 border-white-4 p-4 gap-4">
       <div className="flex justify-between gap-2">
         {status == "Claimed" ? (
-          <div className="flex border rounded-full bg-blue-4 border-blue-8 text-blue-100 ty-subtitle py-2 px-3">
+          <div className="flex border gap-2 items-center rounded-full bg-blue-100 border-blue-8 text-white-100 ty-subtitle py-2 px-3">
             {status}
+            <Check className="h-3 w-3 text-white-100"></Check>
           </div>
         ) : (
           <div className="flex border rounded-full bg-yellow-4 border-yellow-8 text-yellow-100 ty-subtitle py-2 px-3">
@@ -54,16 +56,20 @@ const Card = ({
           <div className="flex border rounded-full border-white-16 p-1">
             <Image src={icon1} alt="Bonk Icon" />
           </div>
-          <p className="ty-subheading text-white-100">{amount}</p>
-          <p className="ty-title text-white-100">{currency}</p>
+          <p className="ty-subheading text-white-100 max-w-[168px] text-ellipsis text-nowrap overflow-hidden">
+            {amount}
+          </p>
+          <p className="ty-title text-white-100 uppercase">{currency}</p>
         </div>
         <p className="ty-descriptions text-white-50">for</p>
         <div className="flex items-center pr-3 pl-1 py-1 gap-2 rounded-full bg-white-4">
           <div className="flex border rounded-full border-white-16 p-1">
             <Image src={icon2} alt="SOL Icon" />
           </div>
-          <p className="ty-subheading text-white-100">{forAmount}</p>
-          <p className="ty-title text-white-100">{forCurrency}</p>
+          <p className="ty-subheading text-white-100 max-w-[168px] text-ellipsis text-nowrap overflow-hidden">
+            {forAmount}
+          </p>
+          <p className="ty-title text-white-100 uppercase">{forCurrency}</p>
         </div>
       </div>
 
@@ -88,7 +94,11 @@ const Card = ({
 
       <Button
         variant={"default"}
-        className="ty-title p-3.5 text-white-100 bg-white-16"
+        className={
+          status === "Claimed"
+            ? "ty-title p-3.5 text-white-32 bg-white-4 cursor-not-allowed"
+            : "ty-title p-3.5 text-white-100 bg-white-8 hover:bg-white-16 ease-out duration-300"
+        }
       >
         Claim bidding
       </Button>
