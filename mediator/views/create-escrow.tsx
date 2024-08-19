@@ -71,145 +71,140 @@ export default function CreateEscrow() {
             </AlertDialogCancel>
           </AlertDialogTitle>
 
-          <AlertDialogDescription className="flex flex-col gap-4">
-            {/* inputs */}
-            <div className="flex flex-col gap-2">
-              <div className="grow flex items-center backdrop-blur-lg bg-white-4 rounded-lg p-3 gap-3 ease-out duration-300 hover:ring-2 hover:ring-white-16 cursor-pointer has-[:focus]:bg-white-8 has-[:focus]:ring-2 has-[:focus]:ring-blue-100">
-                <Input
-                  type="number"
-                  min={0}
-                  className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                ></Input>
-                <Popover open={fromMintOpen} onOpenChange={setFromMintOpen}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="tokenDropdown"
-                      role="fromCombobox"
-                      aria-expanded={fromMintOpen}
-                      className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
-                    >
-                      <Avatar className="h-4 w-4">
-                        <AvatarImage src="https://github.com/shadcn.png" />
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>
-                      {fromMint
-                        ? frameworks.find(
-                            (framework) => framework.value === fromMint
-                          )?.label
-                        : "Select a coin"}
-                      <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="min-w-[128px] p-0">
-                    <Command>
-                      {/* <CommandInput placeholder="Search framework..." /> */}
-                      <CommandList>
-                        <CommandEmpty>No framework found.</CommandEmpty>
-                        <CommandGroup>
-                          {frameworks.map((framework) => (
-                            <CommandItem
-                              key={framework.value}
-                              value={framework.value}
-                              className={
+          <AlertDialogDescription className="flex flex-col gap-2">
+            <div className="grow flex items-center backdrop-blur-lg bg-white-4 rounded-lg p-3 gap-3 ease-out duration-300 hover:ring-2 hover:ring-white-16 cursor-pointer has-[:focus]:bg-white-8 has-[:focus]:ring-2 has-[:focus]:ring-blue-100">
+              <Input
+                type="number"
+                min={0}
+                className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              ></Input>
+              <Popover open={fromMintOpen} onOpenChange={setFromMintOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="tokenDropdown"
+                    role="fromCombobox"
+                    aria-expanded={fromMintOpen}
+                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                  >
+                    <Avatar className="h-4 w-4">
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    {fromMint
+                      ? frameworks.find(
+                          (framework) => framework.value === fromMint
+                        )?.label
+                      : "Select a coin"}
+                    <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="min-w-[128px] p-0">
+                  <Command>
+                    {/* <CommandInput placeholder="Search framework..." /> */}
+                    <CommandList>
+                      <CommandEmpty>No framework found.</CommandEmpty>
+                      <CommandGroup>
+                        {frameworks.map((framework) => (
+                          <CommandItem
+                            key={framework.value}
+                            value={framework.value}
+                            className={
+                              fromMint === framework.value
+                                ? "bg-blue-100 hover:bg-blue-50"
+                                : ""
+                            }
+                            onSelect={(currentValue) => {
+                              setFromMint(
+                                currentValue === fromMint ? "" : currentValue
+                              );
+                              setFromMintOpen(false);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "h-4 w-4",
                                 fromMint === framework.value
-                                  ? "bg-blue-100 hover:bg-blue-50"
-                                  : ""
-                              }
-                              onSelect={(currentValue) => {
-                                setFromMint(
-                                  currentValue === fromMint ? "" : currentValue
-                                );
-                                setFromMintOpen(false);
-                              }}
-                            >
-                              <Check
-                                className={cn(
-                                  "h-4 w-4",
-                                  fromMint === framework.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                              {framework.label}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </div>
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                            {framework.label}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </div>
 
               <p className="text-center text-white-16 ty-description">for</p>
 
-              <div className="grow flex items-center backdrop-blur-lg bg-white-4 rounded-lg p-3 gap-3 ease-out duration-300 hover:ring-2 hover:ring-white-16 cursor-pointer has-[:focus]:bg-white-8 has-[:focus]:ring-2 has-[:focus]:ring-blue-100">
-                <Input
-                  type="number"
-                  min={0}
-                  className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                ></Input>
-                <Popover open={toMintOpen} onOpenChange={setToMintOpen}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="tokenDropdown"
-                      role="fromCombobox"
-                      aria-expanded={toMintOpen}
-                      className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
-                    >
-                      <Avatar className="h-4 w-4">
-                        <AvatarImage src="https://github.com/shadcn.png" />
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>
-                      {toMint
-                        ? frameworks.find(
-                            (framework) => framework.value === toMint
-                          )?.label
-                        : "Select a coin"}
-                      <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="min-w-[128px] p-0">
-                    <Command>
-                      {/* <CommandInput placeholder="Search framework..." /> */}
-                      <CommandList>
-                        <CommandEmpty>No framework found.</CommandEmpty>
-                        <CommandGroup>
-                          {frameworks.map((framework) => (
-                            <CommandItem
-                              key={framework.value}
-                              value={framework.value}
-                              className={
+            <div className="grow flex items-center backdrop-blur-lg bg-white-4 rounded-lg p-3 gap-3 ease-out duration-300 hover:ring-2 hover:ring-white-16 cursor-pointer has-[:focus]:bg-white-8 has-[:focus]:ring-2 has-[:focus]:ring-blue-100">
+              <Input
+                type="number"
+                min={0}
+                className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              ></Input>
+              <Popover open={toMintOpen} onOpenChange={setToMintOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="tokenDropdown"
+                    role="fromCombobox"
+                    aria-expanded={toMintOpen}
+                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                  >
+                    <Avatar className="h-4 w-4">
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    {toMint
+                      ? frameworks.find(
+                          (framework) => framework.value === toMint
+                        )?.label
+                      : "Select a coin"}
+                    <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="min-w-[128px] p-0">
+                  <Command>
+                    {/* <CommandInput placeholder="Search framework..." /> */}
+                    <CommandList>
+                      <CommandEmpty>No framework found.</CommandEmpty>
+                      <CommandGroup>
+                        {frameworks.map((framework) => (
+                          <CommandItem
+                            key={framework.value}
+                            value={framework.value}
+                            className={
+                              toMint === framework.value
+                                ? "bg-blue-100 hover:bg-blue-50"
+                                : ""
+                            }
+                            onSelect={(currentValue) => {
+                              setToMint(
+                                currentValue === toMint ? "" : currentValue
+                              );
+                              setToMintOpen(false);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "h-4 w-4",
                                 toMint === framework.value
-                                  ? "bg-blue-100 hover:bg-blue-50"
-                                  : ""
-                              }
-                              onSelect={(currentValue) => {
-                                setToMint(
-                                  currentValue === toMint ? "" : currentValue
-                                );
-                                setToMintOpen(false);
-                              }}
-                            >
-                              <Check
-                                className={cn(
-                                  "h-4 w-4",
-                                  toMint === framework.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                              {framework.label}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </div>
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                            {framework.label}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
             </div>
-
-            {/* information */}
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-4">
                 <p className="text-start w-[108px] ty-descriptions text-white-50">
