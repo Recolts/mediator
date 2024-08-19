@@ -27,7 +27,25 @@ const cards = [
   {
     status: "Unclaimed",
     amount: 586129222.02,
-    currency: "Bonk",
+    currency: "ETH",
+    forAmount: 2.69,
+    forCurrency: "SOL",
+    programId: "0x132..a9s",
+    escrowCreator: "cryptofonzy.sol",
+  },
+  {
+    status: "Unclaimed",
+    amount: 586129222.02,
+    currency: "PYUSD",
+    forAmount: 2.69,
+    forCurrency: "SOL",
+    programId: "0x132..a9s",
+    escrowCreator: "cryptofonzy.sol",
+  },
+  {
+    status: "Unclaimed",
+    amount: 586129222.02,
+    currency: "USDC",
     forAmount: 2.69,
     forCurrency: "SOL",
     programId: "0x132..a9s",
@@ -37,6 +55,24 @@ const cards = [
     status: "Claimed",
     amount: 123456789,
     currency: "BONK",
+    forAmount: 69,
+    forCurrency: "SOL",
+    programId: "0x132..a9s",
+    escrowCreator: "0x132..a9s",
+  },
+  {
+    status: "Claimed",
+    amount: 123456789,
+    currency: "SOL",
+    forAmount: 69,
+    forCurrency: "SOL",
+    programId: "0x132..a9s",
+    escrowCreator: "0x132..a9s",
+  },
+  {
+    status: "Claimed",
+    amount: 123456789,
+    currency: "ETH",
     forAmount: 69,
     forCurrency: "SOL",
     programId: "0x132..a9s",
@@ -117,7 +153,8 @@ const HeroSection = () => {
             <div className="flex gap-4 grow w-[480px]">
               <Tabs
                 defaultValue="PublicBidding"
-                className="flex flex-col items-start rounded-lg grow gap-4">
+                className="flex flex-col items-start rounded-lg grow gap-4"
+              >
                 <div className="flex grow  w-full">
                   <TabsList className="bg-white-4 p-2">
                     <TabsTrigger value="PublicBidding" className="">
@@ -133,7 +170,8 @@ const HeroSection = () => {
                             variant="tokenDropdown"
                             role="combobox"
                             aria-expanded={coinOpen}
-                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
+                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                          >
                             {coinValue !== "All Coins"
                               ? coinValue
                               : "All Coins"}
@@ -155,7 +193,8 @@ const HeroSection = () => {
                                           : currentValue
                                       );
                                       setcoinOpen(false);
-                                    }}>
+                                    }}
+                                  >
                                     <Check
                                       className={cn(
                                         "mr-2 h-4 w-4",
@@ -178,7 +217,8 @@ const HeroSection = () => {
                             variant="tokenDropdown"
                             role="combobox"
                             aria-expanded={statusOpen}
-                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
+                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                          >
                             {statusValue !== "All Status"
                               ? statusValue
                               : "All Status"}
@@ -200,7 +240,8 @@ const HeroSection = () => {
                                           : currentValue
                                       );
                                       setstatusOpen(false);
-                                    }}>
+                                    }}
+                                  >
                                     <Check
                                       className={cn(
                                         "mr-2 h-4 w-4",
@@ -234,9 +275,10 @@ const HeroSection = () => {
 
                 <TabsContent
                   value="PublicBidding"
-                  className="data-[state=inactive]:hidden">
+                  className="data-[state=inactive]:hidden"
+                >
                   <div className="flex flex-wrap gap-4 scroll-auto overflow-hidden">
-                    {statusValue === "All Status"
+                    {statusValue === "All Status" && coinValue === "All Coins"
                       ? cards.map((data, i) => (
                           <Card
                             key={i}
@@ -250,7 +292,11 @@ const HeroSection = () => {
                           />
                         ))
                       : cards.map((data, i) =>
-                          data.status === statusValue ? (
+                          (statusValue === "All Status" ||
+                            data.status === statusValue) &&
+                          (coinValue === "All Coins" ||
+                            data.currency === coinValue ||
+                            data.forCurrency === coinValue) ? (
                             <Card
                               key={i}
                               status={data.status}
@@ -269,7 +315,8 @@ const HeroSection = () => {
                 </TabsContent>
                 <TabsContent
                   value="MyEscrow"
-                  className="data-[state=inactive]:hidden">
+                  className="data-[state=inactive]:hidden"
+                >
                   <div className="flex flex-wrap gap-4 scroll-auto overflow-hidden"></div>
                 </TabsContent>
               </Tabs>
