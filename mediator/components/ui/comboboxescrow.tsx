@@ -42,7 +42,7 @@ const frameworks = [
   },
 ];
 
-export function ComboboxDemo() {
+export function ComboBoxEscrow() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
@@ -50,14 +50,13 @@ export function ComboboxDemo() {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant="default"
-          role="combobox"
-          className="rounded-lg bg-white-4 text-white-100 py-2 px-3 gap-2"
+          variant="tokenDropdown"
+          className="flex gap-2 px-3 py-2 rounded-lg bg-white-4 ty-descriptions text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
         >
           {value
             ? frameworks.find((framework) => framework.value === value)?.label
             : "All Coins"}
-          <ChevronDown className="h-4 w-4 " />
+          <ChevronDown className="h-3.5 w-3.5 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">

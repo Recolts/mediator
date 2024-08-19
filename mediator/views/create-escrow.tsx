@@ -67,14 +67,16 @@ export default function CreateEscrow() {
               <Input
                 type="number"
                 min={0}
-                className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"></Input>
+                className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              ></Input>
               <Popover open={fromMintOpen} onOpenChange={setFromMintOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="tokenDropdown"
                     role="fromCombobox"
                     aria-expanded={fromMintOpen}
-                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
+                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                  >
                     <Avatar className="h-4 w-4">
                       <AvatarImage src="https://github.com/shadcn.png" />
                       <AvatarFallback>CN</AvatarFallback>
@@ -107,7 +109,8 @@ export default function CreateEscrow() {
                                 currentValue === fromMint ? "" : currentValue
                               );
                               setFromMintOpen(false);
-                            }}>
+                            }}
+                          >
                             <Check
                               className={cn(
                                 "h-4 w-4",
@@ -132,14 +135,16 @@ export default function CreateEscrow() {
               <Input
                 type="number"
                 min={0}
-                className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"></Input>
+                className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              ></Input>
               <Popover open={toMintOpen} onOpenChange={setToMintOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="tokenDropdown"
                     role="fromCombobox"
                     aria-expanded={toMintOpen}
-                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
+                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                  >
                     <Avatar className="h-4 w-4">
                       <AvatarImage src="https://github.com/shadcn.png" />
                       <AvatarFallback>CN</AvatarFallback>
@@ -172,7 +177,8 @@ export default function CreateEscrow() {
                                 currentValue === toMint ? "" : currentValue
                               );
                               setToMintOpen(false);
-                            }}>
+                            }}
+                          >
                             <Check
                               className={cn(
                                 "h-4 w-4",
@@ -203,7 +209,8 @@ export default function CreateEscrow() {
 
             <Button
               variant={"default"}
-              className="ty-title p-3.5 bg-white-100 text-black-100">
+              className="ty-title p-3.5 bg-white-100 text-black-100"
+            >
               Approve Contract
             </Button>
           </AlertDialogDescription>
