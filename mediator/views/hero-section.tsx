@@ -81,8 +81,8 @@ const coins = [
 const HeroSection = () => {
   const [coinOpen, setcoinOpen] = useState(false);
   const [statusOpen, setstatusOpen] = useState(false);
-  const [coinValue, setcoinValue] = useState("");
-  const [statusValue, setstatusValue] = useState("");
+  const [coinValue, setcoinValue] = useState("All Coins");
+  const [statusValue, setstatusValue] = useState("All Status");
 
   return (
     <div className="flex bg-white-4 justify-center items-start min-h-[100dvh]">
@@ -116,9 +116,8 @@ const HeroSection = () => {
           <div className="flex gap-4 w-full">
             <div className="flex gap-4 grow w-[480px]">
               <Tabs
-                defaultValue="account"
-                className="flex flex-col items-start rounded-lg grow gap-4"
-              >
+                defaultValue="PublicBidding"
+                className="flex flex-col items-start rounded-lg grow gap-4">
                 <div className="flex grow  w-full">
                   <TabsList className="bg-white-4 p-2">
                     <TabsTrigger value="PublicBidding" className="">
@@ -134,20 +133,16 @@ const HeroSection = () => {
                             variant="tokenDropdown"
                             role="combobox"
                             aria-expanded={coinOpen}
-                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
-                          >
-                            {coinValue
-                              ? coins.find((coins) => coins.value === coinValue)
-                                  ?.label
-                              : "Select Coins"}
-                            <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
+                            {coinValue !== "All Coins"
+                              ? coinValue
+                              : "All Coins"}
+                            <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-[200px] p-0">
                           <Command>
-                            <CommandInput placeholder="Search framework..." />
                             <CommandList>
-                              <CommandEmpty>No framework found.</CommandEmpty>
                               <CommandGroup>
                                 {coins.map((coins) => (
                                   <CommandItem
@@ -156,12 +151,11 @@ const HeroSection = () => {
                                     onSelect={(currentValue) => {
                                       setcoinValue(
                                         currentValue === coinValue
-                                          ? ""
+                                          ? "All Coins"
                                           : currentValue
                                       );
                                       setcoinOpen(false);
-                                    }}
-                                  >
+                                    }}>
                                     <Check
                                       className={cn(
                                         "mr-2 h-4 w-4",
@@ -184,21 +178,16 @@ const HeroSection = () => {
                             variant="tokenDropdown"
                             role="combobox"
                             aria-expanded={statusOpen}
-                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
-                          >
-                            {statusValue
-                              ? status.find(
-                                  (status) => status.value === statusValue
-                                )?.label
-                              : "Select status"}
-                            <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
+                            {statusValue !== "All Status"
+                              ? statusValue
+                              : "All Status"}
+                            <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-[200px] p-0">
                           <Command>
-                            <CommandInput placeholder="Search framework..." />
                             <CommandList>
-                              <CommandEmpty>No framework found.</CommandEmpty>
                               <CommandGroup>
                                 {status.map((status) => (
                                   <CommandItem
@@ -207,12 +196,11 @@ const HeroSection = () => {
                                     onSelect={(currentValue) => {
                                       setstatusValue(
                                         currentValue === statusValue
-                                          ? ""
+                                          ? "All Status"
                                           : currentValue
                                       );
                                       setstatusOpen(false);
-                                    }}
-                                  >
+                                    }}>
                                     <Check
                                       className={cn(
                                         "mr-2 h-4 w-4",
@@ -246,27 +234,42 @@ const HeroSection = () => {
 
                 <TabsContent
                   value="PublicBidding"
-                  className="data-[state=inactive]:hidden"
-                >
+                  className="data-[state=inactive]:hidden">
                   <div className="flex flex-wrap gap-4 scroll-auto overflow-hidden">
-                    {cards.map((data, i) => (
-                      <Card
-                        key={i}
-                        status={data.status}
-                        amount={data.amount}
-                        currency={data.currency}
-                        forAmount={data.forAmount}
-                        forCurrency={data.forCurrency}
-                        programId={data.programId}
-                        escrowCreator={data.escrowCreator}
-                      />
-                    ))}
+                    {statusValue === "All Status"
+                      ? cards.map((data, i) => (
+                          <Card
+                            key={i}
+                            status={data.status}
+                            amount={data.amount}
+                            currency={data.currency}
+                            forAmount={data.forAmount}
+                            forCurrency={data.forCurrency}
+                            programId={data.programId}
+                            escrowCreator={data.escrowCreator}
+                          />
+                        ))
+                      : cards.map((data, i) =>
+                          data.status === statusValue ? (
+                            <Card
+                              key={i}
+                              status={data.status}
+                              amount={data.amount}
+                              currency={data.currency}
+                              forAmount={data.forAmount}
+                              forCurrency={data.forCurrency}
+                              programId={data.programId}
+                              escrowCreator={data.escrowCreator}
+                            />
+                          ) : (
+                            <></>
+                          )
+                        )}
                   </div>
                 </TabsContent>
                 <TabsContent
                   value="MyEscrow"
-                  className="data-[state=inactive]:hidden"
-                >
+                  className="data-[state=inactive]:hidden">
                   <div className="flex flex-wrap gap-4 scroll-auto overflow-hidden"></div>
                 </TabsContent>
               </Tabs>
