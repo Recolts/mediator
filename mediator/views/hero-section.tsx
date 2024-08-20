@@ -5,7 +5,7 @@ import search from "@/public/icons/search-01.svg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CreateEscrow from "./create-escrow";
 import { Check, ChevronDown } from "lucide-react";
 import {
@@ -14,9 +14,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import {
-  CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
   Command,
@@ -119,6 +117,26 @@ const HeroSection = () => {
   const [statusOpen, setstatusOpen] = useState(false);
   const [coinValue, setcoinValue] = useState("All Coins");
   const [statusValue, setstatusValue] = useState("All Status");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredCards, setFilteredCards] = useState(cards);
+
+  const filterCards = () => {
+    return cards.filter((data) => {
+      return (
+        (statusValue === "All Status" || data.status === statusValue) &&
+        (coinValue === "All Coins" ||
+          data.currency === coinValue ||
+          data.forCurrency === coinValue) &&
+        (data.currency.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          data.forCurrency.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          data.escrowCreator.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+    });
+  };
+
+  useEffect(() => {
+    setFilteredCards(filterCards());
+  }, [searchTerm, statusValue, coinValue]);
 
   return (
     <div className="flex bg-white-4 justify-center items-start min-h-[100dvh]">
@@ -139,7 +157,7 @@ const HeroSection = () => {
               <Input
                 title="private key"
                 placeholder="Paste an escrow private key here..."
-                className="border rounded-lg p-3.5 border-white-8"
+                className="border rounded-lg p-3.5 bg-white-8 border-white-8 grow"
               />
             </div>
             <h1 className="ty-subtext text-white-12">OR</h1>
@@ -193,6 +211,7 @@ const HeroSection = () => {
                                           : currentValue
                                       );
                                       setcoinOpen(false);
+                                      setFilteredCards(filterCards());
                                     }}
                                   >
                                     <Check
@@ -240,6 +259,7 @@ const HeroSection = () => {
                                           : currentValue
                                       );
                                       setstatusOpen(false);
+                                      setFilteredCards(filterCards());
                                     }}
                                   >
                                     <Check
@@ -258,17 +278,22 @@ const HeroSection = () => {
                           </Command>
                         </PopoverContent>
                       </Popover>
-                      <Input
-                        title="Search coin or creator"
-                        placeholder="Search coin or creator"
-                        className="border rounded-lg p-3.5 border-white-8 bg-white-4"
-                      />
-                      {/* <div className="flex items-center border rounded-lg border-white-8 gap-2 py-2 pr-3 pl-2 bg-white-4">
-                        <Image src={search} alt="copy icon" />
-                        <h1 className="ty-descriptions text-white-32 text-nowrap">
-                          Search coin or creator
-                        </h1>
-                      </div> */}
+                      <div
+                        className="flex items-center gap-2 bg-white-4 border text-white-100
+                       border-white-8 rounded-lg px-2 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                      >
+                        <Image src={search} alt={"search icon"}></Image>
+                        <Input
+                          type="text"
+                          placeholder="Search coin or Creator"
+                          className="bg-transparent"
+                          value={searchTerm}
+                          onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                            setFilteredCards(filterCards());
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -278,39 +303,18 @@ const HeroSection = () => {
                   className="data-[state=inactive]:hidden"
                 >
                   <div className="flex flex-wrap gap-4 scroll-auto overflow-hidden">
-                    {statusValue === "All Status" && coinValue === "All Coins"
-                      ? cards.map((data, i) => (
-                          <Card
-                            key={i}
-                            status={data.status}
-                            amount={data.amount}
-                            currency={data.currency}
-                            forAmount={data.forAmount}
-                            forCurrency={data.forCurrency}
-                            programId={data.programId}
-                            escrowCreator={data.escrowCreator}
-                          />
-                        ))
-                      : cards.map((data, i) =>
-                          (statusValue === "All Status" ||
-                            data.status === statusValue) &&
-                          (coinValue === "All Coins" ||
-                            data.currency === coinValue ||
-                            data.forCurrency === coinValue) ? (
-                            <Card
-                              key={i}
-                              status={data.status}
-                              amount={data.amount}
-                              currency={data.currency}
-                              forAmount={data.forAmount}
-                              forCurrency={data.forCurrency}
-                              programId={data.programId}
-                              escrowCreator={data.escrowCreator}
-                            />
-                          ) : (
-                            <></>
-                          )
-                        )}
+                    {filteredCards.map((data, i) => (
+                      <Card
+                        key={i}
+                        status={data.status}
+                        amount={data.amount}
+                        currency={data.currency}
+                        forAmount={data.forAmount}
+                        forCurrency={data.forCurrency}
+                        programId={data.programId}
+                        escrowCreator={data.escrowCreator}
+                      />
+                    ))}
                   </div>
                 </TabsContent>
                 <TabsContent
