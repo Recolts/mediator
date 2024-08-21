@@ -155,9 +155,9 @@ const HeroSection = () => {
           <div className="flex justify-center items-center gap-4">
             <div className="flex p-1 border rounded-xl w-[344px] border-white-8">
               <Input
-                title="private key"
-                placeholder="Paste an escrow private key here..."
-                className="border rounded-lg p-3.5 bg-white-8 border-white-8 grow"
+                title="ProgramAddress"
+                placeholder="Paste an escrow program address here..."
+                className="text-white-100 border rounded-lg p-3.5 bg-white-8 border-white-8 grow hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
               />
             </div>
             <h1 className="ty-subtext text-white-12">OR</h1>
