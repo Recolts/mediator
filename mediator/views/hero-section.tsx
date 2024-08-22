@@ -20,6 +20,9 @@ import {
   Command,
 } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
+import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 
 const cards = [
   {
@@ -142,9 +145,32 @@ const HeroSection = () => {
     <div className="flex bg-white-4 justify-center items-start min-h-[100dvh]">
       <div className="flex flex-col gap-8 max-w-[960px] pt-[calc(.4*100dvh)] grow">
         <div className="hero flex flex-col gap-8 items-start grow">
+          <BackgroundGradientAnimation>
+            <HeroHighlight>
+              <motion.h1
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: [20, -5, 0],
+                }}
+                transition={{
+                  duration: 0.5,
+                  ease: [0.4, 0.0, 0.2, 1],
+                }}
+                className="text-2xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto "
+              ></motion.h1>
+            </HeroHighlight>
+          </BackgroundGradientAnimation>
+
           <div className="flex flex-col gap-4 max-w-[636px] w-full">
             <h1 className="ty-h6 sm:ty-h4 lg:ty-h1 text-white-100">
-              Escrow your tokens, name your price.
+              Escrow your tokens,{" "}
+              <Highlight className="text-black dark:text-white">
+                name your price.
+              </Highlight>
             </h1>
             <h1 className="ty-subheading text-white-50">
               Secured deals, hassle-free token bidding using Anchor Escrow in

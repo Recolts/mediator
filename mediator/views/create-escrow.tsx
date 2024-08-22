@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/popover";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import InitializeEscrow from "./initialize-escrow";
 
 const frameworks = [
   {
@@ -76,7 +77,7 @@ export default function CreateEscrow() {
               <Input
                 type="number"
                 min={0}
-                className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                className="min-w-[144px] cursor-pointer bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               ></Input>
               <Popover open={fromMintOpen} onOpenChange={setFromMintOpen}>
                 <PopoverTrigger asChild>
@@ -138,7 +139,7 @@ export default function CreateEscrow() {
               </Popover>
             </div>
 
-              <p className="text-center text-white-16 ty-description">for</p>
+            <p className="text-center text-white-16 ty-description">for</p>
 
             <div className="grow flex items-center backdrop-blur-lg bg-white-4 rounded-lg p-3 gap-3 ease-out duration-300 hover:ring-2 hover:ring-white-16 cursor-pointer has-[:focus]:bg-white-8 has-[:focus]:ring-2 has-[:focus]:ring-blue-100">
               <Input
@@ -235,12 +236,7 @@ export default function CreateEscrow() {
             </div>
 
             {/* button */}
-            <Button
-              variant={"default"}
-              className="ty-title p-3.5 bg-white-100 text-black-100"
-            >
-              Approve Contract
-            </Button>
+            <InitializeEscrow />
           </AlertDialogDescription>
         </AlertDialogHeader>
       </AlertDialogContent>

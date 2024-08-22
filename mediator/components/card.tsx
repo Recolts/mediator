@@ -1,18 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import { useState } from "react";
 import icon1 from "@/public/icons/Bonk.png";
 import icon2 from "@/public/icons/Sol.png";
 import icon3 from "@/public/icons/copy-01.svg";
-import cancel from "@/public/cancel-01.svg";
 import { Button } from "@/components/ui/button";
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Check, CheckCircle, CheckCircle2Icon } from "lucide-react";
 
 type jsonObject = {
