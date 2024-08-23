@@ -1,10 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import icon1 from "@/public/icons/Bonk.png";
-import icon2 from "@/public/icons/Sol.png";
-import icon3 from "@/public/icons/copy-01.svg";
+import SOL from "@/public/icons/Sol.png";
+import USDC from "@/public/usdc.svg";
+import PYUSD from "@/public/pyusd.svg";
 import { Button } from "@/components/ui/button";
-import { Check, CheckCircle, CheckCircle2Icon } from "lucide-react";
+import { Check, Copy, CheckCircle, CheckCircle2Icon } from "lucide-react";
+import { useToast } from "./ui/use-toast";
+import formatString from "./formatString";
 
 type jsonObject = {
   status: string;
@@ -12,7 +14,7 @@ type jsonObject = {
   currency: string;
   forAmount: number;
   forCurrency: string;
-  programId: string;
+  escrowID: string;
   escrowCreator: string;
 };
 
@@ -22,9 +24,39 @@ const Card = ({
   currency,
   forAmount,
   forCurrency,
-  programId,
+  escrowID,
   escrowCreator,
 }: jsonObject) => {
+  const { toast } = useToast();
+
+  const getCurrencyImage = () => {
+    switch (currency) {
+      case "PYUSD":
+        return PYUSD;
+      case "USDC":
+        return USDC;
+      case "SOL":
+        return SOL;
+      default:
+        return null;
+    }
+  };
+
+  const getForCurrencyImage = () => {
+    switch (forCurrency) {
+      case "PYUSD":
+        return PYUSD;
+      case "USDC":
+        return USDC;
+      case "SOL":
+        return SOL;
+      default:
+        return null;
+    }
+  };
+
+  const currencyImage = getCurrencyImage();
+  const forCurrencyImage = getForCurrencyImage();
   return (
     <div className="flex flex-col border rounded-2xl bg-white-4 border-white-4 p-4 gap-4">
       <div className="flex justify-between gap-2">
@@ -45,7 +77,14 @@ const Card = ({
       <div className="flex gap-2 items-center">
         <div className="flex items-center pr-3 pl-1 py-1 gap-2 rounded-full bg-white-4">
           <div className="flex border rounded-full border-white-16 p-1">
-            <Image src={icon1} alt="Bonk Icon" />
+            {currencyImage && (
+              <Image
+                src={currencyImage}
+                alt={`${currency} Icon`}
+                width={16}
+                height={16}
+              />
+            )}
           </div>
           <p className="ty-subheading text-white-100 max-w-[168px] text-ellipsis text-nowrap overflow-hidden">
             {amount}
@@ -55,7 +94,14 @@ const Card = ({
         <p className="ty-descriptions text-white-50">for</p>
         <div className="flex items-center pr-3 pl-1 py-1 gap-2 rounded-full bg-white-4">
           <div className="flex border rounded-full border-white-16 p-1">
-            <Image src={icon2} alt="SOL Icon" />
+            {forCurrencyImage && (
+              <Image
+                src={forCurrencyImage}
+                alt={`${forCurrency} Icon`}
+                width={16}
+                height={16}
+              />
+            )}
           </div>
           <p className="ty-subheading text-white-100 max-w-[168px] text-ellipsis text-nowrap overflow-hidden">
             {forAmount}
@@ -66,20 +112,41 @@ const Card = ({
 
       <div className="flex flex-col gap-2 grow">
         <div className="flex gap-1 items-center">
-          <h1 className="ty-descriptions text-white-50 w-[108px]">
-            Program ID
-          </h1>
-          <h1 className="ty-descriptions text-white-100">{programId}</h1>
-          <Image src={icon3} alt="Copy Icon" />
+          <p className="ty-descriptions text-white-50 w-[108px]">escrowID</p>
+          <p className="ty-descriptions text-white-100">
+            {formatString(escrowID)}
+          </p>
+          <Copy
+            className="h-3 w-3 shrink-0 opacity-50 cursor-pointer text-white-100"
+            onClick={() => {
+              navigator.clipboard.writeText(escrowID);
+              toast({
+                variant: "good",
+                title: "Escrow ID copied to clipboard!",
+              });
+            }}
+          ></Copy>
         </div>
       </div>
 
       <div className="flex flex-col gap-2 grow">
         <div className="flex gap-1 items-center">
-          <h1 className="ty-descriptions text-white-50 w-[108px] text-nowrap">
+          <p className="ty-descriptions text-white-50 w-[108px] text-nowrap">
             Escrow Creator
-          </h1>
-          <h1 className="ty-descriptions text-white-100">{escrowCreator}</h1>
+          </p>
+          <p className="ty-descriptions text-white-100">
+            {formatString(escrowCreator)}
+          </p>
+          <Copy
+            className="h-3 w-3 shrink-0 opacity-50 cursor-pointer text-white-100"
+            onClick={() => {
+              navigator.clipboard.writeText(escrowCreator);
+              toast({
+                variant: "good",
+                title: "Escrow Creator copied to clipboard!",
+              });
+            }}
+          ></Copy>
         </div>
       </div>
 

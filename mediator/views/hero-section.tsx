@@ -28,11 +28,11 @@ const cards = [
   {
     status: "Unclaimed",
     amount: 586129222.02,
-    currency: "ETH",
+    currency: "PYUSD",
     forAmount: 2.69,
-    forCurrency: "SOL",
-    programId: "0x132..a9s",
-    escrowCreator: "cryptofonzy.sol",
+    forCurrency: "USDC",
+    escrowID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+    escrowCreator: "CfurJW5g544kWypk2mik3dpJBzDAtMXBS4qseoePkqwi",
   },
   {
     status: "Unclaimed",
@@ -40,26 +40,26 @@ const cards = [
     currency: "PYUSD",
     forAmount: 2.69,
     forCurrency: "SOL",
-    programId: "0x132..a9s",
-    escrowCreator: "cryptofonzy.sol",
+    escrowID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+    escrowCreator: "CfurJW5g544kWypk2mik3dpJBzDAtMXBS4qseoePkqwi",
   },
   {
     status: "Unclaimed",
     amount: 586129222.02,
-    currency: "USDC",
+    currency: "SOL",
     forAmount: 2.69,
-    forCurrency: "SOL",
-    programId: "0x132..a9s",
-    escrowCreator: "cryptofonzy.sol",
+    forCurrency: "USDC",
+    escrowID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+    escrowCreator: "CfurJW5g544kWypk2mik3dpJBzDAtMXBS4qseoePkqwi",
   },
   {
     status: "Claimed",
     amount: 123456789,
-    currency: "BONK",
+    currency: "USDC",
     forAmount: 69,
     forCurrency: "SOL",
-    programId: "0x132..a9s",
-    escrowCreator: "0x132..a9s",
+    escrowID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+    escrowCreator: "0xBA4A377917e54d06a09951CB47D406b8b7E2C9E7",
   },
   {
     status: "Claimed",
@@ -67,17 +67,17 @@ const cards = [
     currency: "SOL",
     forAmount: 69,
     forCurrency: "SOL",
-    programId: "0x132..a9s",
-    escrowCreator: "0x132..a9s",
+    escrowID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDnIo",
+    escrowCreator: "0xBA4A377917e54d06a09951CB47D406b8b7E2C9E7",
   },
   {
     status: "Claimed",
     amount: 123456789,
-    currency: "ETH",
+    currency: "USDC",
     forAmount: 69,
     forCurrency: "SOL",
-    programId: "0x132..a9s",
-    escrowCreator: "0x132..a9s",
+    escrowID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDnIo",
+    escrowCreator: "0xBA4A377917e54d06a09951CB47D406b8b7E2C9E7",
   },
 ];
 
@@ -105,14 +105,6 @@ const coins = [
     value: "PYUSD",
     label: "PYUSD",
   },
-  {
-    value: "ETH",
-    label: "ETH",
-  },
-  {
-    value: "BONK",
-    label: "BONK",
-  },
 ];
 
 const HeroSection = () => {
@@ -121,6 +113,7 @@ const HeroSection = () => {
   const [coinValue, setcoinValue] = useState("All Coins");
   const [statusValue, setstatusValue] = useState("All Status");
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchValue, setSearchValue] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
 
   const filterCards = () => {
@@ -132,14 +125,17 @@ const HeroSection = () => {
           data.forCurrency === coinValue) &&
         (data.currency.toLowerCase().includes(searchTerm.toLowerCase()) ||
           data.forCurrency.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          data.escrowCreator.toLowerCase().includes(searchTerm.toLowerCase()))
+          data.escrowCreator
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())) &&
+        data.escrowID.toLowerCase().includes(searchValue.toLowerCase())
       );
     });
   };
 
   useEffect(() => {
     setFilteredCards(filterCards());
-  }, [searchTerm, statusValue, coinValue]);
+  }, [searchTerm, statusValue, coinValue, searchValue]);
 
   return (
     <div className="flex bg-white-4 justify-center items-start min-h-[100dvh]">
@@ -181,9 +177,14 @@ const HeroSection = () => {
           <div className="flex justify-center items-center gap-4">
             <div className="flex p-1 border rounded-xl w-[344px] border-white-8">
               <Input
-                title="ProgramAddress"
+                title="escrowID"
                 placeholder="Paste an escrow program address here..."
                 className="text-white-100 border rounded-lg p-3.5 bg-white-8 border-white-8 grow hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                value={searchValue}
+                onChange={(e) => {
+                  setSearchValue(e.target.value);
+                  setFilteredCards(filterCards());
+                }}
               />
             </div>
             <h1 className="ty-subtext text-white-12">OR</h1>
@@ -197,7 +198,8 @@ const HeroSection = () => {
             <div className="flex gap-4 grow w-[480px]">
               <Tabs
                 defaultValue="PublicBidding"
-                className="flex flex-col items-start rounded-lg grow gap-4">
+                className="flex flex-col items-start rounded-lg grow gap-4"
+              >
                 <div className="flex grow  w-full">
                   <TabsList className="bg-white-4 p-2">
                     <TabsTrigger value="PublicBidding" className="">
@@ -213,7 +215,8 @@ const HeroSection = () => {
                             variant="tokenDropdown"
                             role="combobox"
                             aria-expanded={coinOpen}
-                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
+                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                          >
                             {coinValue !== "All Coins"
                               ? coinValue
                               : "All Coins"}
@@ -236,7 +239,8 @@ const HeroSection = () => {
                                       );
                                       setcoinOpen(false);
                                       setFilteredCards(filterCards());
-                                    }}>
+                                    }}
+                                  >
                                     <Check
                                       className={cn(
                                         "mr-2 h-4 w-4",
@@ -259,7 +263,8 @@ const HeroSection = () => {
                             variant="tokenDropdown"
                             role="combobox"
                             aria-expanded={statusOpen}
-                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
+                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                          >
                             {statusValue !== "All Status"
                               ? statusValue
                               : "All Status"}
@@ -282,7 +287,8 @@ const HeroSection = () => {
                                       );
                                       setstatusOpen(false);
                                       setFilteredCards(filterCards());
-                                    }}>
+                                    }}
+                                  >
                                     <Check
                                       className={cn(
                                         "mr-2 h-4 w-4",
@@ -301,7 +307,8 @@ const HeroSection = () => {
                       </Popover>
                       <div
                         className="flex items-center gap-2 bg-white-4 border text-white-100
-                       border-white-8 rounded-lg px-2 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
+                       border-white-8 rounded-lg px-2 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                      >
                         <Image src={search} alt={"search icon"}></Image>
                         <Input
                           type="text"
@@ -320,7 +327,8 @@ const HeroSection = () => {
 
                 <TabsContent
                   value="PublicBidding"
-                  className="data-[state=inactive]:hidden">
+                  className="data-[state=inactive]:hidden"
+                >
                   <div className="flex flex-wrap gap-4 scroll-auto overflow-hidden">
                     {filteredCards.map((data, i) => (
                       <Card
@@ -330,7 +338,7 @@ const HeroSection = () => {
                         currency={data.currency}
                         forAmount={data.forAmount}
                         forCurrency={data.forCurrency}
-                        programId={data.programId}
+                        escrowID={data.escrowID}
                         escrowCreator={data.escrowCreator}
                       />
                     ))}
@@ -338,7 +346,8 @@ const HeroSection = () => {
                 </TabsContent>
                 <TabsContent
                   value="MyEscrow"
-                  className="data-[state=inactive]:hidden">
+                  className="data-[state=inactive]:hidden"
+                >
                   <div className="flex flex-wrap gap-4 scroll-auto overflow-hidden"></div>
                 </TabsContent>
               </Tabs>
