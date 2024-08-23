@@ -197,8 +197,7 @@ const HeroSection = () => {
             <div className="flex gap-4 grow w-[480px]">
               <Tabs
                 defaultValue="PublicBidding"
-                className="flex flex-col items-start rounded-lg grow gap-4"
-              >
+                className="flex flex-col items-start rounded-lg grow gap-4">
                 <div className="flex grow  w-full">
                   <TabsList className="bg-white-4 p-2">
                     <TabsTrigger value="PublicBidding" className="">
@@ -214,8 +213,7 @@ const HeroSection = () => {
                             variant="tokenDropdown"
                             role="combobox"
                             aria-expanded={coinOpen}
-                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
-                          >
+                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
                             {coinValue !== "All Coins"
                               ? coinValue
                               : "All Coins"}
@@ -238,8 +236,7 @@ const HeroSection = () => {
                                       );
                                       setcoinOpen(false);
                                       setFilteredCards(filterCards());
-                                    }}
-                                  >
+                                    }}>
                                     <Check
                                       className={cn(
                                         "mr-2 h-4 w-4",
@@ -262,8 +259,7 @@ const HeroSection = () => {
                             variant="tokenDropdown"
                             role="combobox"
                             aria-expanded={statusOpen}
-                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
-                          >
+                            className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
                             {statusValue !== "All Status"
                               ? statusValue
                               : "All Status"}
@@ -286,8 +282,7 @@ const HeroSection = () => {
                                       );
                                       setstatusOpen(false);
                                       setFilteredCards(filterCards());
-                                    }}
-                                  >
+                                    }}>
                                     <Check
                                       className={cn(
                                         "mr-2 h-4 w-4",
@@ -306,8 +301,7 @@ const HeroSection = () => {
                       </Popover>
                       <div
                         className="flex items-center gap-2 bg-white-4 border text-white-100
-                       border-white-8 rounded-lg px-2 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
-                      >
+                       border-white-8 rounded-lg px-2 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
                         <Image src={search} alt={"search icon"}></Image>
                         <Input
                           type="text"
@@ -326,8 +320,7 @@ const HeroSection = () => {
 
                 <TabsContent
                   value="PublicBidding"
-                  className="data-[state=inactive]:hidden"
-                >
+                  className="data-[state=inactive]:hidden">
                   <div className="flex flex-wrap gap-4 scroll-auto overflow-hidden">
                     {filteredCards.map((data, i) => (
                       <Card
@@ -345,8 +338,7 @@ const HeroSection = () => {
                 </TabsContent>
                 <TabsContent
                   value="MyEscrow"
-                  className="data-[state=inactive]:hidden"
-                >
+                  className="data-[state=inactive]:hidden">
                   <div className="flex flex-wrap gap-4 scroll-auto overflow-hidden"></div>
                 </TabsContent>
               </Tabs>

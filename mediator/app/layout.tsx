@@ -3,6 +3,7 @@ import "./globals.css";
 import "../public/logo.png";
 import { outfit } from "@/public/fonts";
 import Providers from "@/components/providers";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "mediator.",
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={outfit.className}>
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   );
