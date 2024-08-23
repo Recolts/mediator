@@ -112,7 +112,7 @@ const Card = ({
 
       <div className="flex flex-col gap-2 grow">
         <div className="flex gap-1 items-center">
-          <p className="ty-descriptions text-white-50 w-[108px]">escrowID</p>
+          <p className="ty-descriptions text-white-50 w-[108px]">Escrow ID</p>
           <p className="ty-descriptions text-white-100">
             {formatString(escrowID)}
           </p>
