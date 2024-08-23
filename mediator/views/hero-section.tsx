@@ -145,7 +145,7 @@ const HeroSection = () => {
     <div className="flex bg-white-4 justify-center items-start min-h-[100dvh]">
       <div className="flex flex-col gap-8 max-w-[960px] pt-[calc(.4*100dvh)] grow">
         <div className="hero flex flex-col gap-8 items-start grow">
-          <BackgroundGradientAnimation>
+          {/* <BackgroundGradientAnimation>
             <HeroHighlight>
               <motion.h1
                 initial={{
@@ -163,7 +163,7 @@ const HeroSection = () => {
                 className="text-2xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto "
               ></motion.h1>
             </HeroHighlight>
-          </BackgroundGradientAnimation>
+          </BackgroundGradientAnimation> */}
 
           <div className="flex flex-col gap-4 max-w-[636px] w-full">
             <h1 className="ty-h6 sm:ty-h4 lg:ty-h1 text-white-100">
