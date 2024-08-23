@@ -29,6 +29,8 @@ import {
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import InitializeEscrow from "./initialize-escrow";
+import formatString from "@/components/formatString";
+import { useToast } from "@/components/ui/use-toast";
 
 const frameworks = [
   {
@@ -42,19 +44,16 @@ const frameworks = [
 ];
 
 const data = {
-  programID: "0x132..a9s",
-  escrowID: "0x132..a9s",
+  programID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+  escrowID: "H4vxLTfQHLR8tsEvvGfVmy1B5YtgrbmKFhiZr6VRvv9q",
 };
 
 export default function CreateEscrow() {
+  const { toast } = useToast();
   const [toMintOpen, setToMintOpen] = useState(false);
   const [fromMintOpen, setFromMintOpen] = useState(false);
   const [toMint, setToMint] = useState("");
   const [fromMint, setFromMint] = useState("");
-
-  // const [programID, setProgramID] = useState("");
-  // const [escrowID, setEscrowID] = useState("");
-
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -77,16 +76,14 @@ export default function CreateEscrow() {
               <Input
                 type="number"
                 min={0}
-                className="min-w-[144px] cursor-pointer bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              ></Input>
+                className="min-w-[144px] cursor-pointer bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"></Input>
               <Popover open={fromMintOpen} onOpenChange={setFromMintOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="tokenDropdown"
                     role="fromCombobox"
                     aria-expanded={fromMintOpen}
-                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
-                  >
+                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
                     <Avatar className="h-4 w-4">
                       <AvatarImage src="https://github.com/shadcn.png" />
                       <AvatarFallback>CN</AvatarFallback>
@@ -119,8 +116,7 @@ export default function CreateEscrow() {
                                 currentValue === fromMint ? "" : currentValue
                               );
                               setFromMintOpen(false);
-                            }}
-                          >
+                            }}>
                             <Check
                               className={cn(
                                 "h-4 w-4",
@@ -145,16 +141,14 @@ export default function CreateEscrow() {
               <Input
                 type="number"
                 min={0}
-                className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              ></Input>
+                className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"></Input>
               <Popover open={toMintOpen} onOpenChange={setToMintOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="tokenDropdown"
                     role="fromCombobox"
                     aria-expanded={toMintOpen}
-                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
-                  >
+                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
                     <Avatar className="h-4 w-4">
                       <AvatarImage src="https://github.com/shadcn.png" />
                       <AvatarFallback>CN</AvatarFallback>
@@ -187,8 +181,7 @@ export default function CreateEscrow() {
                                 currentValue === toMint ? "" : currentValue
                               );
                               setToMintOpen(false);
-                            }}
-                          >
+                            }}>
                             <Check
                               className={cn(
                                 "h-4 w-4",
@@ -206,19 +199,22 @@ export default function CreateEscrow() {
                 </PopoverContent>
               </Popover>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 p-2">
               <div className="flex items-center gap-4">
                 <p className="text-start w-[108px] ty-descriptions text-white-50">
                   Program ID
                 </p>
                 <p className="text-start grow ty-descriptions text-white-100 flex gap-2 items-center">
-                  {data.programID}
+                  {formatString(data.programID)}
                   <Copy
                     className="h-3 w-3 shrink-0 opacity-50 cursor-pointer"
-                    onClick={() =>
-                      navigator.clipboard.writeText(data.programID)
-                    }
-                  ></Copy>
+                    onClick={() => {
+                      navigator.clipboard.writeText(data.programID);
+                      toast({
+                        variant: "good",
+                        title: "Program ID copied to clipboard!",
+                      });
+                    }}></Copy>
                 </p>
               </div>
               <div className="flex items-center gap-4">
@@ -226,17 +222,20 @@ export default function CreateEscrow() {
                   Escrow Creator
                 </p>
                 <p className="text-start grow ty-descriptions text-white-100 flex gap-2 items-center">
-                  {data.escrowID}
+                  {formatString(data.escrowID)}
                   <Copy
                     className="h-3 w-3 shrink-0 opacity-50 cursor-pointer"
-                    onClick={() => navigator.clipboard.writeText(data.escrowID)}
-                  ></Copy>
+                    onClick={() => {
+                      navigator.clipboard.writeText(data.escrowID);
+                      toast({
+                        variant: "good",
+                        title: "Escrow ID copied to clipboard!",
+                      });
+                    }}></Copy>
                 </p>
               </div>
             </div>
-
-            {/* button */}
-            <InitializeEscrow />
+            <InitializeEscrow privateEscrowID={data.programID} />
           </AlertDialogDescription>
         </AlertDialogHeader>
       </AlertDialogContent>
