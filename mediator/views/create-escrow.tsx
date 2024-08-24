@@ -132,14 +132,11 @@ export default function CreateEscrow() {
                               value={framework.value}
                               className="cursor-not-allowed bg-white-8 text-white-32"
                             >
-                              <Check
-                                className={cn(
-                                  "h-4 w-4",
-                                  fromMint === framework.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
+                              <Image
+                                src={framework.image}
+                                alt={framework.label}
+                                className="h-4 w-4 opacity-50"
+                              ></Image>
                               {framework.label}
                             </CommandItem>
                           ) : (
@@ -198,7 +195,19 @@ export default function CreateEscrow() {
                     aria-expanded={toMintOpen}
                     className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
                   >
-                    <CircleHelp className="h-4 w-4 opacity-50"></CircleHelp>
+                    {toMint ? (
+                      <Image
+                        src={
+                          frameworks.find(
+                            (framework) => framework.value === toMint
+                          )?.image
+                        }
+                        alt=""
+                        className="h-4 w-4"
+                      ></Image>
+                    ) : (
+                      <CircleHelp className="h-4 w-4 opacity-50"></CircleHelp>
+                    )}
                     {toMint
                       ? frameworks.find(
                           (framework) => framework.value === toMint
@@ -220,14 +229,11 @@ export default function CreateEscrow() {
                               value={framework.value}
                               className="cursor-not-allowed bg-white-8 text-white-32"
                             >
-                              <Check
-                                className={cn(
-                                  "h-4 w-4",
-                                  toMint === framework.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
+                              <Image
+                                src={framework.image}
+                                alt={framework.label}
+                                className="h-4 w-4 opacity-50"
+                              ></Image>
                               {framework.label}
                             </CommandItem>
                           ) : (
@@ -246,14 +252,11 @@ export default function CreateEscrow() {
                                 setToMintOpen(false);
                               }}
                             >
-                              <Check
-                                className={cn(
-                                  "h-4 w-4",
-                                  toMint === framework.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
+                              <Image
+                                src={framework.image}
+                                alt={framework.label}
+                                className="h-4 w-4"
+                              ></Image>
                               {framework.label}
                             </CommandItem>
                           )
