@@ -10,6 +10,7 @@ import formatString from "./formatString";
 
 type jsonObject = {
   status: string;
+  date: number;
   amount: number;
   currency: string;
   forAmount: number;
@@ -20,6 +21,7 @@ type jsonObject = {
 
 const Card = ({
   status,
+  date,
   amount,
   currency,
   forAmount,
@@ -71,7 +73,7 @@ const Card = ({
           </div>
         )}
 
-        <div className="flex ty-subtext text-white-50">July 09 • 11:45 PM</div>
+        <div className="flex ty-subtext text-white-50">{date}</div>
       </div>
 
       <div className="flex gap-2 items-center">
