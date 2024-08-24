@@ -24,9 +24,14 @@ import { motion } from "framer-motion";
 import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 
+import SOL from "@/public/icons/Sol.png";
+import USDC from "@/public/usdc.svg";
+import PYUSD from "@/public/pyusd.svg";
+
 const cards = [
   {
     status: "Unclaimed",
+    date: 123456789,
     amount: 586129222.02,
     currency: "PYUSD",
     forAmount: 2.69,
@@ -36,6 +41,7 @@ const cards = [
   },
   {
     status: "Unclaimed",
+    date: 123456789,
     amount: 586129222.02,
     currency: "PYUSD",
     forAmount: 2.69,
@@ -45,6 +51,7 @@ const cards = [
   },
   {
     status: "Unclaimed",
+    date: 123456789,
     amount: 586129222.02,
     currency: "SOL",
     forAmount: 2.69,
@@ -54,6 +61,7 @@ const cards = [
   },
   {
     status: "Claimed",
+    date: 123456789,
     amount: 123456789,
     currency: "USDC",
     forAmount: 69,
@@ -63,6 +71,7 @@ const cards = [
   },
   {
     status: "Claimed",
+    date: 123456789,
     amount: 123456789,
     currency: "SOL",
     forAmount: 69,
@@ -72,6 +81,7 @@ const cards = [
   },
   {
     status: "Claimed",
+    date: 123456789,
     amount: 123456789,
     currency: "USDC",
     forAmount: 69,
@@ -94,14 +104,17 @@ const status = [
 
 const coins = [
   {
+    image: SOL,
     value: "SOL",
     label: "SOL",
   },
   {
+    image: USDC,
     value: "USDC",
     label: "USDC",
   },
   {
+    image: PYUSD,
     value: "PYUSD",
     label: "PYUSD",
   },
@@ -218,6 +231,19 @@ const HeroSection = () => {
                             className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
                           >
                             {coinValue !== "All Coins"
+                              ? coins.map((data) =>
+                                  coinValue === data.value ? (
+                                    <Image
+                                      src={data.image}
+                                      alt={data.value}
+                                      className="h-4 w-4"
+                                    ></Image>
+                                  ) : (
+                                    ""
+                                  )
+                                )
+                              : ""}
+                            {coinValue !== "All Coins"
                               ? coinValue
                               : "All Coins"}
                             <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
@@ -241,14 +267,11 @@ const HeroSection = () => {
                                       setFilteredCards(filterCards());
                                     }}
                                   >
-                                    <Check
-                                      className={cn(
-                                        "mr-2 h-4 w-4",
-                                        coinValue === coins.value
-                                          ? "opacity-100"
-                                          : "opacity-0"
-                                      )}
-                                    />
+                                    <Image
+                                      src={coins.image}
+                                      alt={coins.value}
+                                      className="h-4 w-4"
+                                    ></Image>
                                     {coins.label}
                                   </CommandItem>
                                 ))}
@@ -334,6 +357,7 @@ const HeroSection = () => {
                       <Card
                         key={i}
                         status={data.status}
+                        date={data.date}
                         amount={data.amount}
                         currency={data.currency}
                         forAmount={data.forAmount}
