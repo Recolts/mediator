@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Check, ChevronDown, Copy, X } from "lucide-react";
+import { Check, ChevronDown, CircleHelp, Copy, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Command,
@@ -31,15 +31,26 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import InitializeEscrow from "./initialize-escrow";
 import formatString from "@/components/formatString";
 import { useToast } from "@/components/ui/use-toast";
+import SOL from "@/public/icons/Sol.png";
+import USDC from "@/public/usdc.svg";
+import PYUSD from "@/public/pyusd.svg";
+import Image from "next/image";
 
 const frameworks = [
   {
+    image: SOL,
     value: "So11111111111111111111111111111111111111112",
     label: "SOL",
   },
   {
+    image: USDC,
     value: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
     label: "USDC",
+  },
+  {
+    image: PYUSD,
+    value: "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo",
+    label: "PYUSD",
   },
 ];
 
@@ -54,6 +65,7 @@ export default function CreateEscrow() {
   const [fromMintOpen, setFromMintOpen] = useState(false);
   const [toMint, setToMint] = useState("");
   const [fromMint, setFromMint] = useState("");
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -76,18 +88,29 @@ export default function CreateEscrow() {
               <Input
                 type="number"
                 min={0}
-                className="min-w-[144px] cursor-pointer bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"></Input>
+                className="min-w-[144px] cursor-pointer bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              ></Input>
               <Popover open={fromMintOpen} onOpenChange={setFromMintOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="tokenDropdown"
                     role="fromCombobox"
                     aria-expanded={fromMintOpen}
-                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
-                    <Avatar className="h-4 w-4">
-                      <AvatarImage src="https://github.com/shadcn.png" />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
+                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                  >
+                    {fromMint ? (
+                      <Image
+                        src={
+                          frameworks.find(
+                            (framework) => framework.value === fromMint
+                          )?.image
+                        }
+                        alt=""
+                        className="h-4 w-4"
+                      ></Image>
+                    ) : (
+                      <CircleHelp className="h-4 w-4 opacity-50"></CircleHelp>
+                    )}
                     {fromMint
                       ? frameworks.find(
                           (framework) => framework.value === fromMint
@@ -102,32 +125,53 @@ export default function CreateEscrow() {
                     <CommandList>
                       <CommandEmpty>No framework found.</CommandEmpty>
                       <CommandGroup>
-                        {frameworks.map((framework) => (
-                          <CommandItem
-                            key={framework.value}
-                            value={framework.value}
-                            className={
-                              fromMint === framework.value
-                                ? "bg-blue-100 hover:bg-blue-50"
-                                : ""
-                            }
-                            onSelect={(currentValue) => {
-                              setFromMint(
-                                currentValue === fromMint ? "" : currentValue
-                              );
-                              setFromMintOpen(false);
-                            }}>
-                            <Check
-                              className={cn(
-                                "h-4 w-4",
+                        {frameworks.map((framework) =>
+                          framework.value === toMint && toMint !== "" ? (
+                            <CommandItem
+                              key={framework.value}
+                              value={framework.value}
+                              className="cursor-not-allowed bg-white-8 text-white-32"
+                            >
+                              <Image
+                                src={framework.image}
+                                alt={framework.label}
+                                className="h-4 w-4 opacity-50"
+                              ></Image>
+                              {framework.label}
+                            </CommandItem>
+                          ) : (
+                            <CommandItem
+                              key={framework.value}
+                              value={framework.value}
+                              className={
                                 fromMint === framework.value
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                            {framework.label}
-                          </CommandItem>
-                        ))}
+                                  ? "bg-blue-100 hover:bg-blue-50"
+                                  : ""
+                              }
+                              onSelect={(currentValue) => {
+                                setFromMint(
+                                  currentValue === fromMint ? "" : currentValue
+                                );
+                                setFromMintOpen(false);
+                              }}
+                            >
+                              {/* <Check
+                                className={cn(
+                                  "h-4 w-4",
+                                  fromMint === framework.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              /> */}
+                              <Image
+                                src={framework.image}
+                                alt={framework.label}
+                                className="h-4 w-4"
+                              ></Image>
+                              {framework.label}
+                            </CommandItem>
+                          )
+                        )}
                       </CommandGroup>
                     </CommandList>
                   </Command>
@@ -141,18 +185,29 @@ export default function CreateEscrow() {
               <Input
                 type="number"
                 min={0}
-                className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"></Input>
+                className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              ></Input>
               <Popover open={toMintOpen} onOpenChange={setToMintOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="tokenDropdown"
                     role="fromCombobox"
                     aria-expanded={toMintOpen}
-                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300">
-                    <Avatar className="h-4 w-4">
-                      <AvatarImage src="https://github.com/shadcn.png" />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
+                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                  >
+                    {toMint ? (
+                      <Image
+                        src={
+                          frameworks.find(
+                            (framework) => framework.value === toMint
+                          )?.image
+                        }
+                        alt=""
+                        className="h-4 w-4"
+                      ></Image>
+                    ) : (
+                      <CircleHelp className="h-4 w-4 opacity-50"></CircleHelp>
+                    )}
                     {toMint
                       ? frameworks.find(
                           (framework) => framework.value === toMint
@@ -167,32 +222,45 @@ export default function CreateEscrow() {
                     <CommandList>
                       <CommandEmpty>No framework found.</CommandEmpty>
                       <CommandGroup>
-                        {frameworks.map((framework) => (
-                          <CommandItem
-                            key={framework.value}
-                            value={framework.value}
-                            className={
-                              toMint === framework.value
-                                ? "bg-blue-100 hover:bg-blue-50"
-                                : ""
-                            }
-                            onSelect={(currentValue) => {
-                              setToMint(
-                                currentValue === toMint ? "" : currentValue
-                              );
-                              setToMintOpen(false);
-                            }}>
-                            <Check
-                              className={cn(
-                                "h-4 w-4",
+                        {frameworks.map((framework) =>
+                          framework.value === fromMint && fromMint !== "" ? (
+                            <CommandItem
+                              key={framework.value}
+                              value={framework.value}
+                              className="cursor-not-allowed bg-white-8 text-white-32"
+                            >
+                              <Image
+                                src={framework.image}
+                                alt={framework.label}
+                                className="h-4 w-4 opacity-50"
+                              ></Image>
+                              {framework.label}
+                            </CommandItem>
+                          ) : (
+                            <CommandItem
+                              key={framework.value}
+                              value={framework.value}
+                              className={
                                 toMint === framework.value
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                            {framework.label}
-                          </CommandItem>
-                        ))}
+                                  ? "bg-blue-100 hover:bg-blue-50"
+                                  : ""
+                              }
+                              onSelect={(currentValue) => {
+                                setToMint(
+                                  currentValue === toMint ? "" : currentValue
+                                );
+                                setToMintOpen(false);
+                              }}
+                            >
+                              <Image
+                                src={framework.image}
+                                alt={framework.label}
+                                className="h-4 w-4"
+                              ></Image>
+                              {framework.label}
+                            </CommandItem>
+                          )
+                        )}
                       </CommandGroup>
                     </CommandList>
                   </Command>
@@ -214,7 +282,8 @@ export default function CreateEscrow() {
                         variant: "good",
                         title: "Program ID copied to clipboard!",
                       });
-                    }}></Copy>
+                    }}
+                  ></Copy>
                 </p>
               </div>
               <div className="flex items-center gap-4">
@@ -231,7 +300,8 @@ export default function CreateEscrow() {
                         variant: "good",
                         title: "Escrow ID copied to clipboard!",
                       });
-                    }}></Copy>
+                    }}
+                  ></Copy>
                 </p>
               </div>
             </div>
