@@ -1,10 +1,9 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-// import Button from "../(components)/button";
 import logo from "@/public/mediator-logo.svg";
-import { Button } from "@/components/ui/button";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import Link from "next/link";
 
 interface INavbarProps {}
 
@@ -19,9 +18,16 @@ function Navbar({}: INavbarProps) {
   return (
     <div className="flex justify-center w-full p-8 top-0 sticky z-50 bg-black-16 backdrop-blur-2xl">
       <div className="flex w-full max-w-[1440px] justify-between">
-        <Image src={logo} alt={""} className="h-[2rem]"></Image>
+        <Link href="/">
+          <Image src={logo} alt={""} className="h-[2rem]"></Image>
+        </Link>
 
-        <WalletMultiButton />
+        <div className="flex items-center gap-4">
+          <Link href="/faucet">
+            <p className="text-white-100 text-2xl">Faucet</p>
+          </Link>
+          <WalletMultiButton />
+        </div>
         {/* <div className="flex border rounded-xl p-1 border-blue-50">
           <Button variant={"connectwallet"}>Connect Wallet</Button>
         </div> */}

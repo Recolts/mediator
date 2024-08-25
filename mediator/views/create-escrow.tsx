@@ -26,7 +26,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import InitializeEscrow from "./initialize-escrow";
 import formatString from "@/components/formatString";
@@ -35,6 +35,9 @@ import SOL from "@/public/icons/Sol.png";
 import USDC from "@/public/usdc.svg";
 import PYUSD from "@/public/pyusd.svg";
 import Image from "next/image";
+import useCreateEscrow from "@/hooks/useCreateEscrow";
+import { PublicKey } from "@solana/web3.js";
+import { PYUSD_MINT, USDC_MINT } from "@/lib/web3";
 
 const frameworks = [
   {
@@ -44,12 +47,12 @@ const frameworks = [
   },
   {
     image: USDC,
-    value: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+    value: USDC_MINT,
     label: "USDC",
   },
   {
     image: PYUSD,
-    value: "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo",
+    value: PYUSD_MINT,
     label: "PYUSD",
   },
 ];
@@ -65,7 +68,21 @@ export default function CreateEscrow() {
   const [fromMintOpen, setFromMintOpen] = useState(false);
   const [toMint, setToMint] = useState("");
   const [fromMint, setFromMint] = useState("");
+  const { mutate, error } = useCreateEscrow();
 
+  useEffect(() => {
+    console.log(error);
+  }, [error]);
+
+  // TODO: use this mutate function
+  const onCreate = () => {
+    mutate({
+      mintA: new PublicKey(PYUSD_MINT),
+      mintB: new PublicKey(USDC_MINT),
+      receive: 10 * 10 ** 6,
+      deposit: 10 * 10 ** 6,
+    });
+  };
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -305,7 +322,9 @@ export default function CreateEscrow() {
                 </p>
               </div>
             </div>
-            <InitializeEscrow privateEscrowID={data.programID} />
+
+            <Button onClick={onCreate}>Initialize Escrow</Button>
+            {/* <InitializeEscrow privateEscrowID={data.programID} /> */}
           </AlertDialogDescription>
         </AlertDialogHeader>
       </AlertDialogContent>
