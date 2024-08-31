@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/mediator_program.json`.
  */
 export type MediatorProgramIDL = {
-  address: "7PySDr54fh8HTupqkRsABh9Hn1wEnjb3xE8jQ2wQMo6v";
+  address: "GKpVM86Bt6aWcWihBAHVH7g9rYrU5XbcYzxuxZD8uMQu";
   metadata: {
     name: "mediatorProgram";
     version: "0.1.0";
@@ -680,7 +680,7 @@ export type MediatorProgramIDL = {
 };
 
 export const MediatorProgram: MediatorProgramIDL = {
-  address: "7PySDr54fh8HTupqkRsABh9Hn1wEnjb3xE8jQ2wQMo6v",
+  address: "GKpVM86Bt6aWcWihBAHVH7g9rYrU5XbcYzxuxZD8uMQu",
   metadata: {
     name: "mediatorProgram",
     version: "0.1.0",

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, useEffect } from "react";
 import CreateEscrow from "./create-escrow";
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown, Copy } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -25,8 +25,14 @@ import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 
 import SOL from "@/public/icons/Sol.png";
-import USDC from "@/public/usdc.svg";
-import PYUSD from "@/public/pyusd.svg";
+import USDC from "@/public/icons/usdc.svg";
+import PYUSD from "@/public/icons/pyusd.svg";
+import useGetEscrows from "@/hooks/useGetEscrows";
+import useGetAssets from "@/hooks/useGetAssets";
+import formatString from "@/components/formatString";
+import { toast } from "@/components/ui/use-toast";
+import useClaimBid from "@/hooks/useClaimBid";
+import { PublicKey } from "@solana/web3.js";
 
 const cards = [
   {
@@ -128,6 +134,22 @@ const HeroSection = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
+  const { data: escrows, isPending } = useGetEscrows();
+  const { mutate, error } = useClaimBid();
+
+  // const { data: assets, error: assetsError } = useGetAssets();
+
+  useEffect(() => {
+    console.log(error);
+  }, [error]);
+
+  useEffect(() => {
+    console.log(escrows);
+  }, [escrows]);
+
+  useEffect(() => {
+    setFilteredCards(filterCards());
+  }, [searchTerm, statusValue, coinValue, searchValue]);
 
   const filterCards = () => {
     return cards.filter((data) => {
@@ -146,9 +168,13 @@ const HeroSection = () => {
     });
   };
 
-  useEffect(() => {
-    setFilteredCards(filterCards());
-  }, [searchTerm, statusValue, coinValue, searchValue]);
+  // if (isPending) {
+  //   return (
+  //     <div className="">
+  //       <p>This shit is loading</p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex bg-white-4 justify-center items-start min-h-[100dvh]">
@@ -352,8 +378,161 @@ const HeroSection = () => {
                   value="PublicBidding"
                   className="data-[state=inactive]:hidden"
                 >
+                  {/* {
+    status: "Unclaimed",
+    date: 123456789,
+    amount: 586129222.02,
+    currency: "PYUSD",
+    forAmount: 2.69,
+    forCurrency: "USDC",
+    escrowID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+    escrowCreator: "CfurJW5g544kWypk2mik3dpJBzDAtMXBS4qseoePkqwi",
+  }, */}
+
                   <div className="flex flex-wrap gap-4 scroll-auto overflow-hidden">
-                    {filteredCards.map((data, i) => (
+                    {escrows?.map((data, i) => (
+                      <div
+                        key={data.publicKey.toString()}
+                        className="flex flex-col border rounded-2xl bg-white-4 border-white-4 p-4 gap-4"
+                      >
+                        <div className="flex justify-between gap-2">
+                          <div className="flex border rounded-full bg-yellow-4 border-yellow-8 text-yellow-100 ty-subtitle py-2 px-3">
+                            Unclaimed
+                          </div>
+
+                          <div className="flex ty-subtext text-white-50">
+                            123123
+                          </div>
+                        </div>
+
+                        <div className="flex gap-2 items-center">
+                          <div className="flex items-center pr-3 pl-1 py-1 gap-2 rounded-full bg-white-4">
+                            <div className="flex border rounded-full border-white-16 p-1">
+                              {/* {data.mintA && (
+                                <Image
+                                  src={data.mintA.metadata}
+                                  alt={`${currency} Icon`}
+                                  width={16}
+                                  height={16}
+                                />
+                              )} */}
+                            </div>
+                            <p className="ty-subheading text-white-100 max-w-[168px] text-ellipsis text-nowrap overflow-hidden">
+                              {/* {data.account. data.mintA?.mint.decimals} */}
+                            </p>
+                            <p className="ty-title text-white-100 uppercase">
+                              {data.mintA?.metadata.symbol}
+                            </p>
+                          </div>
+                          <p className="ty-descriptions text-white-50">for</p>
+                          <div className="flex items-center pr-3 pl-1 py-1 gap-2 rounded-full bg-white-4">
+                            <div className="flex border rounded-full border-white-16 p-1">
+                              {/* {forCurrencyImage && (
+                                <Image
+                                  src={forCurrencyImage}
+                                  alt={`${forCurrency} Icon`}
+                                  width={16}
+                                  height={16}
+                                />
+                              )} */}
+                            </div>
+                            <p className="ty-subheading text-white-100 max-w-[168px] text-ellipsis text-nowrap overflow-hidden">
+                              {data.account.receive /
+                                10 ** (data.mintB?.mint.decimals ?? 1)}
+                            </p>
+                            <p className="ty-title text-white-100 uppercase">
+                              {data.mintB?.metadata.symbol}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col gap-2 grow">
+                          <div className="flex gap-1 items-center">
+                            <p className="ty-descriptions text-white-50 w-[108px]">
+                              Escrow ID
+                            </p>
+                            <p className="ty-descriptions text-white-100">
+                              {formatString(data.publicKey.toString())}
+                            </p>
+                            <Copy
+                              className="h-3 w-3 shrink-0 opacity-50 cursor-pointer text-white-100"
+                              onClick={() => {
+                                navigator.clipboard.writeText(
+                                  data.publicKey.toString()
+                                );
+                                toast({
+                                  variant: "good",
+                                  title: "Escrow ID copied to clipboard!",
+                                });
+                              }}
+                            ></Copy>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col gap-2 grow">
+                          <div className="flex gap-1 items-center">
+                            <p className="ty-descriptions text-white-50 w-[108px] text-nowrap">
+                              Escrow Creator
+                            </p>
+                            <p className="ty-descriptions text-white-100">
+                              {formatString(data.account.maker.toString())}
+                            </p>
+                            {/* <Copy
+                              className="h-3 w-3 shrink-0 opacity-50 cursor-pointer text-white-100"
+                              onClick={() => {
+                                navigator.clipboard.writeText(escrowCreator);
+                                toast({
+                                  variant: "good",
+                                  title: "Escrow Creator copied to clipboard!",
+                                });
+                              }}
+                            ></Copy> */}
+                          </div>
+                        </div>
+
+                        <Button
+                          variant={"default"}
+                          onClick={() => {
+                            if (
+                              data.mintA?.publicKey &&
+                              data.mintB?.publicKey
+                            ) {
+                              mutate({
+                                mintA: new PublicKey(
+                                  data.mintA?.publicKey.toString()
+                                ),
+                                mintB: new PublicKey(
+                                  data.mintB?.publicKey.toString()
+                                ),
+                                maker: new PublicKey(
+                                  data.account.maker.toString()
+                                ),
+                                escrow: new PublicKey(
+                                  data.publicKey.toString()
+                                ),
+                              });
+                            }
+                          }}
+                          className={
+                            "ty-title p-3.5 text-white-100 bg-white-8 hover:bg-white-16 ease-out duration-300"
+                          }
+                        >
+                          Claim bidding
+                        </Button>
+                      </div>
+                      // <Card
+                      //   key={data.publicKey.toString()}
+                      //   status={"Unclaimed"}
+                      //   date={123456789}
+                      //   amount={586129222.02}
+                      //   currency={"PYUSD"}
+                      //   forAmount={Number(data.account.receive)}
+                      //   forCurrency={"USDC"}
+                      //   escrowID={data.publicKey.toString()}
+                      //   escrowCreator={data.account.maker.toString()}
+                      // />
+                    ))}
+                    {/* {filteredCards.map((data, i) => (
                       <Card
                         key={i}
                         status={data.status}
@@ -365,7 +544,7 @@ const HeroSection = () => {
                         escrowID={data.escrowID}
                         escrowCreator={data.escrowCreator}
                       />
-                    ))}
+                    ))} */}
                   </div>
                 </TabsContent>
                 <TabsContent

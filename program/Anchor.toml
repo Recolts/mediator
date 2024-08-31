@@ -7,11 +7,14 @@ skip-lint = false
 [programs.localnet]
 mediator_program = "7PySDr54fh8HTupqkRsABh9Hn1wEnjb3xE8jQ2wQMo6v"
 
+[programs.devnet]
+mediator_program = "GKpVM86Bt6aWcWihBAHVH7g9rYrU5XbcYzxuxZD8uMQu"
+
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "Devnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]

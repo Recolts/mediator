@@ -3,7 +3,7 @@ import {
   createAssociatedTokenAccountIdempotentInstruction,
   createTransferCheckedInstruction,
   getAssociatedTokenAddressSync,
-  TOKEN_2022_PROGRAM_ID,
+  TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import {
@@ -32,14 +32,14 @@ export default function useClaimFromFaucet() {
           value.mintAddress,
           publicKey,
           false,
-          TOKEN_2022_PROGRAM_ID
+          TOKEN_PROGRAM_ID
         );
 
         const fromATA = getAssociatedTokenAddressSync(
           value.mintAddress,
           FAUCET.publicKey,
           false,
-          TOKEN_2022_PROGRAM_ID
+          TOKEN_PROGRAM_ID
         );
         const tx = new Transaction().add(
           createAssociatedTokenAccountIdempotentInstruction(
@@ -47,7 +47,7 @@ export default function useClaimFromFaucet() {
             toATA,
             publicKey,
             value.mintAddress,
-            TOKEN_2022_PROGRAM_ID
+            TOKEN_PROGRAM_ID
           ),
           createTransferCheckedInstruction(
             fromATA,
@@ -57,7 +57,7 @@ export default function useClaimFromFaucet() {
             10 * 10 ** 6,
             6,
             undefined,
-            TOKEN_2022_PROGRAM_ID
+            TOKEN_PROGRAM_ID
           )
         );
 

@@ -32,8 +32,8 @@ import InitializeEscrow from "./initialize-escrow";
 import formatString from "@/components/formatString";
 import { useToast } from "@/components/ui/use-toast";
 import SOL from "@/public/icons/Sol.png";
-import USDC from "@/public/usdc.svg";
-import PYUSD from "@/public/pyusd.svg";
+import USDC from "@/public/icons/usdc.svg";
+import PYUSD from "@/public/icons/pyusd.svg";
 import Image from "next/image";
 import useCreateEscrow from "@/hooks/useCreateEscrow";
 import { PublicKey } from "@solana/web3.js";
@@ -83,6 +83,7 @@ export default function CreateEscrow() {
       deposit: 10 * 10 ** 6,
     });
   };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

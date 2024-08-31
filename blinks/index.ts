@@ -6,13 +6,7 @@ import {
   createPostResponse,
 } from "@solana/actions";
 import cors from "cors";
-import {
-  clusterApiUrl,
-  Connection,
-  PublicKey,
-  SystemProgram,
-  Transaction,
-} from "@solana/web3.js";
+import { transferSolTransaction } from "./transactions";
 
 const app = express();
 
@@ -87,37 +81,6 @@ app
     res.json(payload);
   });
 
-export const transferSolTransaction = async ({
-  from,
-}: {
-  from: string;
-}): Promise<Transaction> => {
-  const fromPubkey = new PublicKey(from);
-  const toPubkey = new PublicKey(
-    "CfurJW5g544kWypk2mik3dpJBzDAtMXBS4qseoePkqwi"
-  );
-
-  const connection = new Connection(clusterApiUrl("mainnet-beta"));
-
-  const minimumBalance = await connection.getMinimumBalanceForRentExemption(0);
-
-  const transaction = new Transaction();
-  transaction.feePayer = fromPubkey;
-
-  transaction.add(
-    SystemProgram.transfer({
-      fromPubkey: fromPubkey,
-      toPubkey: toPubkey,
-      lamports: minimumBalance,
-    })
-  );
-
-  transaction.recentBlockhash = (
-    await connection.getLatestBlockhash()
-  ).blockhash;
-
-  return transaction;
-};
 app.listen(9001, () => {
   console.log("solana-action-express is running!");
 });

@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import SOL from "@/public/icons/Sol.png";
-import USDC from "@/public/usdc.svg";
-import PYUSD from "@/public/pyusd.svg";
+import USDC from "@/public/icons/usdc.svg";
+import PYUSD from "@/public/icons/pyusd.svg";
 import { Button } from "@/components/ui/button";
 import { Check, Copy, CheckCircle, CheckCircle2Icon } from "lucide-react";
 import { useToast } from "./ui/use-toast";

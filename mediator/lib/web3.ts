@@ -5,6 +5,6 @@ export const FAUCET_KEYPAIR = [
   153, 44, 55, 70, 87, 3, 72, 189, 205, 228, 18, 214, 47, 123,
 ];
 
-export const PYUSD_MINT = "6zsD1q2QvCmzuwSzurcHcMFuZ3PAhgtQZviRQsRBv8FP";
-export const USDC_MINT = "oK9zewACRYrEu1ndeAyPqtD6vTQB5rFPtnRo1c8rDFR";
+export const PYUSD_MINT = "EazMsFv3wPKvb3XMHfpaQe9tQtKaCsXw7mSKxZDhBfkU";
+export const USDC_MINT = "6JUdNJaobA7iKam5SUNTDqAfudSHGbVu4qvhcYPPQ43K";
 export const SOL_MINT = "So11111111111111111111111111111111111111112";

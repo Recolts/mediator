@@ -26,7 +26,8 @@ pub struct Take<'info> {
     )]
     pub taker_ata_a: Box<InterfaceAccount<'info, TokenAccount>>,
     #[account(
-        mut,
+        init_if_needed,
+        payer = taker,
         associated_token::mint = mint_b,
         associated_token::authority = taker,
         associated_token::token_program = token_program,
@@ -98,7 +99,7 @@ impl<'info> Take<'info> {
             &signer_seeds,
         );
 
-        transfer_checked(cpi_context, self.escrow.receive, self.mint_b.decimals)?;
+        transfer_checked(cpi_context, self.vault.amount, self.mint_a.decimals)?;
 
         let accounts = CloseAccount {
             account: self.vault.to_account_info(),
