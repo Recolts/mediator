@@ -55,6 +55,67 @@ export const transferSolTransaction = async ({
 interface ITakeEscrowTransaction {
   taker: string;
 }
+
+export const takeEscrowTransaction = async ({
+  taker,
+}: ITakeEscrowTransaction) => {
+  const takerPubkey = new PublicKey(taker);
+
+  const program = new Program<MediatorProgramIDL>(MediatorProgram);
+
+  const escrow = new PublicKey("6MZhJLKvYtAVsMGE5QECd1C5uucMu9UVihazKCaJz6vk");
+
+  const vault = getAssociatedTokenAddressSync(
+    new PublicKey("6zsD1q2QvCmzuwSzurcHcMFuZ3PAhgtQZviRQsRBv8FP"),
+    escrow,
+    true,
+    TOKEN_2022_PROGRAM_ID
+  );
+  return await program.methods
+    .take()
+    .accounts({
+      escrow: new PublicKey("6MZhJLKvYtAVsMGE5QECd1C5uucMu9UVihazKCaJz6vk"),
+      vault,
+      maker_ata_b: new PublicKey(
+        "6MZhJLKvYtAVsMGE5QECd1C5uucMu9UVihazKCaJz6vk"
+      ),
+    })
+    .transaction();
+
+  //   try {
+  //     await program.methods
+  //       .take()
+  //       .accounts({ ...accounts })
+  //       .signers([taker])
+  //       .rpc()
+  //       .then(confirm)
+  //       .then(log);
+  //   const toPubkey = new PublicKey(
+  //     "CfurJW5g544kWypk2mik3dpJBzDAtMXBS4qseoePkqwi"
+  //   );
+
+  //   const connection = new Connection(clusterApiUrl("mainnet-beta"));
+
+  //   const minimumBalance = await connection.getMinimumBalanceForRentExemption(0);
+
+  //   const transaction = new Transaction();
+  //   transaction.feePayer = fromPubkey;
+
+  //   transaction.add(
+  //     SystemProgram.transfer({
+  //       fromPubkey: fromPubkey,
+  //       toPubkey: toPubkey,
+  //       lamports: minimumBalance,
+  //     })
+  //   );
+
+  //   transaction.recentBlockhash = (
+  //     await connection.getLatestBlockhash()
+  //   ).blockhash;
+
+  //   return transaction;
+};
+
 // #[derive(Accounts)]
 // pub struct Take<'info> {
 //     #[account(mut)]
@@ -107,61 +168,3 @@ interface ITakeEscrowTransaction {
 //     pub associated_token_program: Program<'info, AssociatedToken>,
 //     pub system_program: Program<'info, System>,
 // }
-export const takeEscrowTransaction = async ({
-  taker,
-}: ITakeEscrowTransaction) => {
-  const takerPubkey = new PublicKey(taker);
-
-  const program = new Program<MediatorProgramIDL>(MediatorProgram);
-
-  const escrow = new PublicKey("6MZhJLKvYtAVsMGE5QECd1C5uucMu9UVihazKCaJz6vk");
-
-  const vault = getAssociatedTokenAddressSync(
-    new PublicKey("6zsD1q2QvCmzuwSzurcHcMFuZ3PAhgtQZviRQsRBv8FP"),
-    escrow,
-    true,
-    TOKEN_2022_PROGRAM_ID
-  );
-  //   return await program.methods
-  //     .take()
-  //     .accounts({
-  //       escrow: new PublicKey("6MZhJLKvYtAVsMGE5QECd1C5uucMu9UVihazKCaJz6vk"),
-  //       vault,
-  //       maker_ata_b: new PublicKey("6MZhJLKvYtAVsMGE5QECd1C5uucMu9UVihazKCaJz6vk"),
-  //       escrow: new PublicKey("6MZhJLKvYtAVsMGE5QECd1C5uucMu9UVihazKCaJz6vk"),
-  //     })
-  //     .transaction();
-
-  //   try {
-  //     await program.methods
-  //       .take()
-  //       .accounts({ ...accounts })
-  //       .signers([taker])
-  //       .rpc()
-  //       .then(confirm)
-  //       .then(log);
-  //   const toPubkey = new PublicKey(
-  //     "CfurJW5g544kWypk2mik3dpJBzDAtMXBS4qseoePkqwi"
-  //   );
-
-  //   const connection = new Connection(clusterApiUrl("mainnet-beta"));
-
-  //   const minimumBalance = await connection.getMinimumBalanceForRentExemption(0);
-
-  //   const transaction = new Transaction();
-  //   transaction.feePayer = fromPubkey;
-
-  //   transaction.add(
-  //     SystemProgram.transfer({
-  //       fromPubkey: fromPubkey,
-  //       toPubkey: toPubkey,
-  //       lamports: minimumBalance,
-  //     })
-  //   );
-
-  //   transaction.recentBlockhash = (
-  //     await connection.getLatestBlockhash()
-  //   ).blockhash;
-
-  //   return transaction;
-};

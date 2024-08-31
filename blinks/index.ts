@@ -81,6 +81,32 @@ app
     res.json(payload);
   });
 
+app
+  .get("/actions/claim", (req, res) => {
+    const payload: ActionGetResponse = {
+      type: "action",
+      title: "Escrow Vault",
+      icon: "https://scontent.fmnl17-3.fna.fbcdn.net/v/t1.15752-9/456566829_1711901823073025_1368723189421534580_n.png?_nc_cat=103&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeEoeLiZfBtMfNQWnlCfyUT3YLDqsOkeEwZgsOqw6R4TBkDJiaA0E92OTRkCUwqlgVJtGmAcRYxW-lzUmhyznd2W&_nc_ohc=k-1zKEMIKDMQ7kNvgEJwHUj&_nc_ht=scontent.fmnl17-3.fna&oh=03_Q7cD1QGaNO1M3Lsj0BpQE2DpkMHylyJfPWAQq9kVA96tieK5LQ&oe=66F7C7F0",
+      description: "SOL to USDC",
+      label: "Claim bidding",
+    };
+    res.json(payload);
+  })
+  .post("/actions/claim", async (req, res) => {
+    const { account } = req.body;
+    const transaction = await transferSolTransaction({ from: account });
+    console.log(transaction);
+
+    const payload: ActionPostResponse = await createPostResponse({
+      fields: {
+        transaction,
+        message: "Send 1 SOL",
+      },
+    });
+
+    res.json(payload);
+  });
+
 app.listen(9001, () => {
   console.log("solana-action-express is running!");
 });

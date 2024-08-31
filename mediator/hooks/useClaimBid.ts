@@ -25,6 +25,7 @@ export default function useClaimBid() {
   const { connection } = useConnection();
   const anchor = useAnchorWallet();
 
+  // TODO: Use this as reference for claiming bids in blinks
   const mutation = useMutation({
     mutationFn: async (value: IClaimBidArgs) => {
       if (anchor && signTransaction) {
