@@ -3,11 +3,11 @@ import { UMI_INSTANCE } from "./config";
 (async () => {
   try {
     const image =
-      "https://arweave.net/jgqEvcijKnempqMLmE3BV3wH25VNQpVwdHi5bcVZDRA";
+      "https://arweave.net/B5qUjbvM23zytb2ptc0rAjlYhsQckdqUsMslJuTGxq4";
     const metadata = {
-      name: "Image",
-      symbol: "IMG",
-      description: "A simple description",
+      name: "Solana",
+      symbol: "SOL",
+      description: "Solana",
       image,
       attributes: [{ trait_type: "Simplicity Level", value: "100" }],
       properties: {

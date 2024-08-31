@@ -14,9 +14,10 @@ export const RPC_URL =
 export const CONNECTION = new Connection(RPC_URL);
 
 export const UMI_INSTANCE = createUmi(RPC_URL);
-UMI_INSTANCE.use(irysUploader());
 
 export const keypair = UMI_INSTANCE.eddsa.createKeypairFromSecretKey(
   new Uint8Array(wallet)
 );
 export const UMI_SIGNER = createSignerFromKeypair(UMI_INSTANCE, keypair);
+UMI_INSTANCE.use(irysUploader());
+UMI_INSTANCE.use(signerIdentity(UMI_SIGNER));

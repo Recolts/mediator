@@ -4,7 +4,7 @@ import { UMI_INSTANCE } from "./config";
 
 (async () => {
   try {
-    const imageFile = await readFile("./assets/images.jpeg");
+    const imageFile = await readFile("./assets/SOL.png");
     const image = createGenericFile(imageFile, "image.jpeg");
     const [myUri] = await UMI_INSTANCE.uploader.upload([image]);
     console.log("Your image URI: ", myUri);

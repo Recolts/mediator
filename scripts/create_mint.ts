@@ -53,9 +53,9 @@ import {
   };
 
   let data: DataV2Args = {
-    name: "Image",
-    symbol: "IMG",
-    uri: "https://arweave.net/8R1Zwt_tumwbO_6vaCqBVEJ-8jG7wPkSpbLsPkLdWkY",
+    name: "Solana",
+    symbol: "SOL",
+    uri: "https://arweave.net/hKUfXgArHK94aUKfYF0L3_o8FUJX-IZL86uXf5_ROBM",
     sellerFeeBasisPoints: 0,
     creators: null,
     collection: null,
