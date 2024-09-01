@@ -45,56 +45,6 @@ const cards = [
     escrowID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
     escrowCreator: "CfurJW5g544kWypk2mik3dpJBzDAtMXBS4qseoePkqwi",
   },
-  {
-    status: "Unclaimed",
-    date: 123456789,
-    amount: 586129222.02,
-    currency: "PYUSD",
-    forAmount: 2.69,
-    forCurrency: "SOL",
-    escrowID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
-    escrowCreator: "CfurJW5g544kWypk2mik3dpJBzDAtMXBS4qseoePkqwi",
-  },
-  {
-    status: "Unclaimed",
-    date: 123456789,
-    amount: 586129222.02,
-    currency: "SOL",
-    forAmount: 2.69,
-    forCurrency: "USDC",
-    escrowID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
-    escrowCreator: "CfurJW5g544kWypk2mik3dpJBzDAtMXBS4qseoePkqwi",
-  },
-  {
-    status: "Claimed",
-    date: 123456789,
-    amount: 123456789,
-    currency: "USDC",
-    forAmount: 69,
-    forCurrency: "SOL",
-    escrowID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
-    escrowCreator: "0xBA4A377917e54d06a09951CB47D406b8b7E2C9E7",
-  },
-  {
-    status: "Claimed",
-    date: 123456789,
-    amount: 123456789,
-    currency: "SOL",
-    forAmount: 69,
-    forCurrency: "SOL",
-    escrowID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDnIo",
-    escrowCreator: "0xBA4A377917e54d06a09951CB47D406b8b7E2C9E7",
-  },
-  {
-    status: "Claimed",
-    date: 123456789,
-    amount: 123456789,
-    currency: "USDC",
-    forAmount: 69,
-    forCurrency: "SOL",
-    escrowID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDnIo",
-    escrowCreator: "0xBA4A377917e54d06a09951CB47D406b8b7E2C9E7",
-  },
 ];
 
 const status = [
@@ -167,14 +117,6 @@ const HeroSection = () => {
       );
     });
   };
-
-  // if (isPending) {
-  //   return (
-  //     <div className="">
-  //       <p>This shit is loading</p>
-  //     </div>
-  //   );
-  // }
 
   return (
     <div className="flex bg-white-4 justify-center items-start min-h-[100dvh]">
@@ -256,19 +198,6 @@ const HeroSection = () => {
                             aria-expanded={coinOpen}
                             className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
                           >
-                            {coinValue !== "All Coins"
-                              ? coins.map((data) =>
-                                  coinValue === data.value ? (
-                                    <Image
-                                      src={data.image}
-                                      alt={data.value}
-                                      className="h-4 w-4"
-                                    ></Image>
-                                  ) : (
-                                    ""
-                                  )
-                                )
-                              : ""}
                             {coinValue !== "All Coins"
                               ? coinValue
                               : "All Coins"}
@@ -378,17 +307,6 @@ const HeroSection = () => {
                   value="PublicBidding"
                   className="data-[state=inactive]:hidden"
                 >
-                  {/* {
-    status: "Unclaimed",
-    date: 123456789,
-    amount: 586129222.02,
-    currency: "PYUSD",
-    forAmount: 2.69,
-    forCurrency: "USDC",
-    escrowID: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
-    escrowCreator: "CfurJW5g544kWypk2mik3dpJBzDAtMXBS4qseoePkqwi",
-  }, */}
-
                   <div className="flex flex-wrap gap-4 scroll-auto overflow-hidden">
                     {escrows?.map((data, i) => (
                       <div
@@ -410,15 +328,16 @@ const HeroSection = () => {
                             <div className="flex border rounded-full border-white-16 p-1">
                               {/* {data.mintA && (
                                 <Image
-                                  src={data.mintA.metadata}
-                                  alt={`${currency} Icon`}
+                                  src={data.mintA.metadata.uri}
+                                  alt={data.mintA.metadata.name}
                                   width={16}
                                   height={16}
                                 />
                               )} */}
                             </div>
                             <p className="ty-subheading text-white-100 max-w-[168px] text-ellipsis text-nowrap overflow-hidden">
-                              {/* {data.account. data.mintA?.mint.decimals} */}
+                              {data.account.receive /
+                                10 ** (data.mintA?.mint.decimals ?? 1)}
                             </p>
                             <p className="ty-title text-white-100 uppercase">
                               {data.mintA?.metadata.symbol}
@@ -427,14 +346,14 @@ const HeroSection = () => {
                           <p className="ty-descriptions text-white-50">for</p>
                           <div className="flex items-center pr-3 pl-1 py-1 gap-2 rounded-full bg-white-4">
                             <div className="flex border rounded-full border-white-16 p-1">
-                              {/* {forCurrencyImage && (
-                                <Image
-                                  src={forCurrencyImage}
-                                  alt={`${forCurrency} Icon`}
-                                  width={16}
-                                  height={16}
-                                />
-                              )} */}
+                              {/* {data.mintB && (
+                                  <Image
+                                    src={data.mintB.metadata.uri}
+                                    alt={data.mintB.metadata.name}
+                                    width={16}
+                                    height={16}
+                                  />
+                                )} */}
                             </div>
                             <p className="ty-subheading text-white-100 max-w-[168px] text-ellipsis text-nowrap overflow-hidden">
                               {data.account.receive /
@@ -477,16 +396,18 @@ const HeroSection = () => {
                             <p className="ty-descriptions text-white-100">
                               {formatString(data.account.maker.toString())}
                             </p>
-                            {/* <Copy
+                            <Copy
                               className="h-3 w-3 shrink-0 opacity-50 cursor-pointer text-white-100"
                               onClick={() => {
-                                navigator.clipboard.writeText(escrowCreator);
+                                navigator.clipboard.writeText(
+                                  data.account.maker.toString()
+                                );
                                 toast({
                                   variant: "good",
                                   title: "Escrow Creator copied to clipboard!",
                                 });
                               }}
-                            ></Copy> */}
+                            ></Copy>
                           </div>
                         </div>
 
@@ -520,31 +441,7 @@ const HeroSection = () => {
                           Claim bidding
                         </Button>
                       </div>
-                      // <Card
-                      //   key={data.publicKey.toString()}
-                      //   status={"Unclaimed"}
-                      //   date={123456789}
-                      //   amount={586129222.02}
-                      //   currency={"PYUSD"}
-                      //   forAmount={Number(data.account.receive)}
-                      //   forCurrency={"USDC"}
-                      //   escrowID={data.publicKey.toString()}
-                      //   escrowCreator={data.account.maker.toString()}
-                      // />
                     ))}
-                    {/* {filteredCards.map((data, i) => (
-                      <Card
-                        key={i}
-                        status={data.status}
-                        date={data.date}
-                        amount={data.amount}
-                        currency={data.currency}
-                        forAmount={data.forAmount}
-                        forCurrency={data.forCurrency}
-                        escrowID={data.escrowID}
-                        escrowCreator={data.escrowCreator}
-                      />
-                    ))} */}
                   </div>
                 </TabsContent>
                 <TabsContent
