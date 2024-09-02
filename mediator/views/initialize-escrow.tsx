@@ -1,6 +1,7 @@
 "use client";
 import {
   AlertDialog,
+  AlertDialogAction,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogHeader,
@@ -13,19 +14,18 @@ import { useState } from "react";
 import formatString from "@/components/formatString";
 import { useToast } from "@/components/ui/use-toast";
 
-type Props = {
+interface IInitializeEscrowProps {
   privateEscrowID: string;
-};
+  open: boolean;
+}
 
-const InitializeEscrow = ({ privateEscrowID }: Props) => {
+const InitializeEscrow = ({
+  privateEscrowID,
+  open,
+}: IInitializeEscrowProps) => {
   const { toast } = useToast();
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button className="ty-title p-3.5 border border-blue-50 bg-blue-100 text-white-100 w-full">
-          Initialize Escrow
-        </Button>
-      </AlertDialogTrigger>
+    <AlertDialog open={open}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogDescription>
@@ -58,8 +58,12 @@ const InitializeEscrow = ({ privateEscrowID }: Props) => {
                 </div>
               </div>
 
-              {/* button */}
-              <Button className="ty-title p-3.5 border border-blue-50 bg-blue-100 text-white-100 w-full">
+              <Button
+                onClick={() => {
+                  window.location.reload();
+                }}
+                className="ty-title p-3.5 border border-blue-50 bg-blue-100 text-white-100 w-full"
+              >
                 Continue
               </Button>
             </div>

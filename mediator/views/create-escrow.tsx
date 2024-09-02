@@ -68,11 +68,7 @@ export default function CreateEscrow() {
   const [fromMintOpen, setFromMintOpen] = useState(false);
   const [toMint, setToMint] = useState("");
   const [fromMint, setFromMint] = useState("");
-  const { mutate, error } = useCreateEscrow();
-
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
+  const { mutate, error, isPending, isSuccess } = useCreateEscrow();
 
   // TODO: use this mutate function
   const onCreate = () => {
@@ -85,95 +81,99 @@ export default function CreateEscrow() {
   };
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant={"button1"} className="ty-title p-3.5">
-          Create an Escrow
-        </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle className="flex items-center justify-between">
-            <p className="ty-subtext text-white-50"> Create an Escrow</p>
+    <>
+      <InitializeEscrow privateEscrowID={data.programID} open={isSuccess} />
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant={"button1"} className="ty-title p-3.5">
+            Create an Escrow
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center justify-between">
+              <p className="ty-subtext text-white-50"> Create an Escrow</p>
 
-            <AlertDialogCancel>
-              <X className="text-white-50 h-3.5 w-3.5 bg-inherit" />
-            </AlertDialogCancel>
-          </AlertDialogTitle>
+              <AlertDialogCancel>
+                <X className="text-white-50 h-3.5 w-3.5 bg-inherit" />
+              </AlertDialogCancel>
+            </AlertDialogTitle>
 
-          <AlertDialogDescription className="flex flex-col gap-2">
-            <div className="grow flex items-center backdrop-blur-lg bg-white-4 rounded-lg p-3 gap-3 ease-out duration-300 hover:ring-2 hover:ring-white-16 cursor-pointer has-[:focus]:bg-white-8 has-[:focus]:ring-2 has-[:focus]:ring-blue-100">
-              <Input
-                type="number"
-                min={0}
-                className="min-w-[144px] cursor-pointer bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              ></Input>
-              <Popover open={fromMintOpen} onOpenChange={setFromMintOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="tokenDropdown"
-                    role="fromCombobox"
-                    aria-expanded={fromMintOpen}
-                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
-                  >
-                    {fromMint ? (
-                      <Image
-                        src={
-                          frameworks.find(
+            <AlertDialogDescription className="flex flex-col gap-2">
+              <div className="grow flex items-center backdrop-blur-lg bg-white-4 rounded-lg p-3 gap-3 ease-out duration-300 hover:ring-2 hover:ring-white-16 cursor-pointer has-[:focus]:bg-white-8 has-[:focus]:ring-2 has-[:focus]:ring-blue-100">
+                <Input
+                  type="number"
+                  min={0}
+                  className="min-w-[144px] cursor-pointer bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                ></Input>
+                <Popover open={fromMintOpen} onOpenChange={setFromMintOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="tokenDropdown"
+                      role="fromCombobox"
+                      aria-expanded={fromMintOpen}
+                      className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                    >
+                      {fromMint ? (
+                        <Image
+                          src={
+                            frameworks.find(
+                              (framework) => framework.value === fromMint
+                            )?.image
+                          }
+                          alt=""
+                          className="h-4 w-4"
+                        ></Image>
+                      ) : (
+                        <CircleHelp className="h-4 w-4 opacity-50"></CircleHelp>
+                      )}
+                      {fromMint
+                        ? frameworks.find(
                             (framework) => framework.value === fromMint
-                          )?.image
-                        }
-                        alt=""
-                        className="h-4 w-4"
-                      ></Image>
-                    ) : (
-                      <CircleHelp className="h-4 w-4 opacity-50"></CircleHelp>
-                    )}
-                    {fromMint
-                      ? frameworks.find(
-                          (framework) => framework.value === fromMint
-                        )?.label
-                      : "Select a coin"}
-                    <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="min-w-[128px] p-0">
-                  <Command>
-                    {/* <CommandInput placeholder="Search framework..." /> */}
-                    <CommandList>
-                      <CommandEmpty>No framework found.</CommandEmpty>
-                      <CommandGroup>
-                        {frameworks.map((framework) =>
-                          framework.value === toMint && toMint !== "" ? (
-                            <CommandItem
-                              key={framework.value}
-                              value={framework.value}
-                              className="cursor-not-allowed bg-white-8 text-white-32"
-                            >
-                              <Image
-                                src={framework.image}
-                                alt={framework.label}
-                                className="h-4 w-4 opacity-50"
-                              ></Image>
-                              {framework.label}
-                            </CommandItem>
-                          ) : (
-                            <CommandItem
-                              key={framework.value}
-                              value={framework.value}
-                              className={
-                                fromMint === framework.value
-                                  ? "bg-blue-100 hover:bg-blue-50"
-                                  : ""
-                              }
-                              onSelect={(currentValue) => {
-                                setFromMint(
-                                  currentValue === fromMint ? "" : currentValue
-                                );
-                                setFromMintOpen(false);
-                              }}
-                            >
-                              {/* <Check
+                          )?.label
+                        : "Select a coin"}
+                      <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="min-w-[128px] p-0">
+                    <Command>
+                      {/* <CommandInput placeholder="Search framework..." /> */}
+                      <CommandList>
+                        <CommandEmpty>No framework found.</CommandEmpty>
+                        <CommandGroup>
+                          {frameworks.map((framework) =>
+                            framework.value === toMint && toMint !== "" ? (
+                              <CommandItem
+                                key={framework.value}
+                                value={framework.value}
+                                className="cursor-not-allowed bg-white-8 text-white-32"
+                              >
+                                <Image
+                                  src={framework.image}
+                                  alt={framework.label}
+                                  className="h-4 w-4 opacity-50"
+                                ></Image>
+                                {framework.label}
+                              </CommandItem>
+                            ) : (
+                              <CommandItem
+                                key={framework.value}
+                                value={framework.value}
+                                className={
+                                  fromMint === framework.value
+                                    ? "bg-blue-100 hover:bg-blue-50"
+                                    : ""
+                                }
+                                onSelect={(currentValue) => {
+                                  setFromMint(
+                                    currentValue === fromMint
+                                      ? ""
+                                      : currentValue
+                                  );
+                                  setFromMintOpen(false);
+                                }}
+                              >
+                                {/* <Check
                                 className={cn(
                                   "h-4 w-4",
                                   fromMint === framework.value
@@ -181,158 +181,159 @@ export default function CreateEscrow() {
                                     : "opacity-0"
                                 )}
                               /> */}
-                              <Image
-                                src={framework.image}
-                                alt={framework.label}
-                                className="h-4 w-4"
-                              ></Image>
-                              {framework.label}
-                            </CommandItem>
-                          )
-                        )}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-            </div>
+                                <Image
+                                  src={framework.image}
+                                  alt={framework.label}
+                                  className="h-4 w-4"
+                                ></Image>
+                                {framework.label}
+                              </CommandItem>
+                            )
+                          )}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </div>
 
-            <p className="text-center text-white-16 ty-description">for</p>
+              <p className="text-center text-white-16 ty-description">for</p>
 
-            <div className="grow flex items-center backdrop-blur-lg bg-white-4 rounded-lg p-3 gap-3 ease-out duration-300 hover:ring-2 hover:ring-white-16 cursor-pointer has-[:focus]:bg-white-8 has-[:focus]:ring-2 has-[:focus]:ring-blue-100">
-              <Input
-                type="number"
-                min={0}
-                className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              ></Input>
-              <Popover open={toMintOpen} onOpenChange={setToMintOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="tokenDropdown"
-                    role="fromCombobox"
-                    aria-expanded={toMintOpen}
-                    className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
-                  >
-                    {toMint ? (
-                      <Image
-                        src={
-                          frameworks.find(
+              <div className="grow flex items-center backdrop-blur-lg bg-white-4 rounded-lg p-3 gap-3 ease-out duration-300 hover:ring-2 hover:ring-white-16 cursor-pointer has-[:focus]:bg-white-8 has-[:focus]:ring-2 has-[:focus]:ring-blue-100">
+                <Input
+                  type="number"
+                  min={0}
+                  className="min-w-[144px] cursor-pointer grow bg-transparent focus:outline-none rounded-none border-none ty-subheading ring-0 flex-1 text-white-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                ></Input>
+                <Popover open={toMintOpen} onOpenChange={setToMintOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="tokenDropdown"
+                      role="fromCombobox"
+                      aria-expanded={toMintOpen}
+                      className="gap-2 p-2 items-center flex rounded-lg bg-white-4 ty-title text-white-100 hover:ring-2 hover:ring-white-8 focus:ring-white-16 focus:bg-white-8 ease-out duration-300"
+                    >
+                      {toMint ? (
+                        <Image
+                          src={
+                            frameworks.find(
+                              (framework) => framework.value === toMint
+                            )?.image
+                          }
+                          alt=""
+                          className="h-4 w-4"
+                        ></Image>
+                      ) : (
+                        <CircleHelp className="h-4 w-4 opacity-50"></CircleHelp>
+                      )}
+                      {toMint
+                        ? frameworks.find(
                             (framework) => framework.value === toMint
-                          )?.image
-                        }
-                        alt=""
-                        className="h-4 w-4"
-                      ></Image>
-                    ) : (
-                      <CircleHelp className="h-4 w-4 opacity-50"></CircleHelp>
-                    )}
-                    {toMint
-                      ? frameworks.find(
-                          (framework) => framework.value === toMint
-                        )?.label
-                      : "Select a coin"}
-                    <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="min-w-[128px] p-0">
-                  <Command>
-                    {/* <CommandInput placeholder="Search framework..." /> */}
-                    <CommandList>
-                      <CommandEmpty>No framework found.</CommandEmpty>
-                      <CommandGroup>
-                        {frameworks.map((framework) =>
-                          framework.value === fromMint && fromMint !== "" ? (
-                            <CommandItem
-                              key={framework.value}
-                              value={framework.value}
-                              className="cursor-not-allowed bg-white-8 text-white-32"
-                            >
-                              <Image
-                                src={framework.image}
-                                alt={framework.label}
-                                className="h-4 w-4 opacity-50"
-                              ></Image>
-                              {framework.label}
-                            </CommandItem>
-                          ) : (
-                            <CommandItem
-                              key={framework.value}
-                              value={framework.value}
-                              className={
-                                toMint === framework.value
-                                  ? "bg-blue-100 hover:bg-blue-50"
-                                  : ""
-                              }
-                              onSelect={(currentValue) => {
-                                setToMint(
-                                  currentValue === toMint ? "" : currentValue
-                                );
-                                setToMintOpen(false);
-                              }}
-                            >
-                              <Image
-                                src={framework.image}
-                                alt={framework.label}
-                                className="h-4 w-4"
-                              ></Image>
-                              {framework.label}
-                            </CommandItem>
-                          )
-                        )}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-            </div>
-            <div className="flex flex-col gap-2 p-2">
-              <div className="flex items-center gap-4">
-                <p className="text-start w-[108px] ty-descriptions text-white-50">
-                  Program ID
-                </p>
-                <p className="text-start grow ty-descriptions text-white-100 flex gap-2 items-center">
-                  {formatString(data.programID)}
-                  <Copy
-                    className="h-3 w-3 shrink-0 opacity-50 cursor-pointer"
-                    onClick={() => {
-                      navigator.clipboard.writeText(data.programID);
-                      toast({
-                        variant: "good",
-                        title: "Program ID copied to clipboard!",
-                      });
-                    }}
-                  ></Copy>
-                </p>
+                          )?.label
+                        : "Select a coin"}
+                      <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="min-w-[128px] p-0">
+                    <Command>
+                      {/* <CommandInput placeholder="Search framework..." /> */}
+                      <CommandList>
+                        <CommandEmpty>No framework found.</CommandEmpty>
+                        <CommandGroup>
+                          {frameworks.map((framework) =>
+                            framework.value === fromMint && fromMint !== "" ? (
+                              <CommandItem
+                                key={framework.value}
+                                value={framework.value}
+                                className="cursor-not-allowed bg-white-8 text-white-32"
+                              >
+                                <Image
+                                  src={framework.image}
+                                  alt={framework.label}
+                                  className="h-4 w-4 opacity-50"
+                                ></Image>
+                                {framework.label}
+                              </CommandItem>
+                            ) : (
+                              <CommandItem
+                                key={framework.value}
+                                value={framework.value}
+                                className={
+                                  toMint === framework.value
+                                    ? "bg-blue-100 hover:bg-blue-50"
+                                    : ""
+                                }
+                                onSelect={(currentValue) => {
+                                  setToMint(
+                                    currentValue === toMint ? "" : currentValue
+                                  );
+                                  setToMintOpen(false);
+                                }}
+                              >
+                                <Image
+                                  src={framework.image}
+                                  alt={framework.label}
+                                  className="h-4 w-4"
+                                ></Image>
+                                {framework.label}
+                              </CommandItem>
+                            )
+                          )}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
-              <div className="flex items-center gap-4">
-                <p className="text-start w-[108px] ty-descriptions text-white-50">
-                  Escrow Creator
-                </p>
-                <p className="text-start grow ty-descriptions text-white-100 flex gap-2 items-center">
-                  {formatString(data.escrowID)}
-                  <Copy
-                    className="h-3 w-3 shrink-0 opacity-50 cursor-pointer"
-                    onClick={() => {
-                      navigator.clipboard.writeText(data.escrowID);
-                      toast({
-                        variant: "good",
-                        title: "Escrow ID copied to clipboard!",
-                      });
-                    }}
-                  ></Copy>
-                </p>
+              <div className="flex flex-col gap-2 p-2">
+                <div className="flex items-center gap-4">
+                  <p className="text-start w-[108px] ty-descriptions text-white-50">
+                    Program ID
+                  </p>
+                  <p className="text-start grow ty-descriptions text-white-100 flex gap-2 items-center">
+                    {formatString(data.programID)}
+                    <Copy
+                      className="h-3 w-3 shrink-0 opacity-50 cursor-pointer"
+                      onClick={() => {
+                        navigator.clipboard.writeText(data.programID);
+                        toast({
+                          variant: "good",
+                          title: "Program ID copied to clipboard!",
+                        });
+                      }}
+                    ></Copy>
+                  </p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <p className="text-start w-[108px] ty-descriptions text-white-50">
+                    Escrow Creator
+                  </p>
+                  <p className="text-start grow ty-descriptions text-white-100 flex gap-2 items-center">
+                    {formatString(data.escrowID)}
+                    <Copy
+                      className="h-3 w-3 shrink-0 opacity-50 cursor-pointer"
+                      onClick={() => {
+                        navigator.clipboard.writeText(data.escrowID);
+                        toast({
+                          variant: "good",
+                          title: "Escrow ID copied to clipboard!",
+                        });
+                      }}
+                    ></Copy>
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <Button
-              onClick={onCreate}
-              className="ty-title p-3.5 border border-blue-50 bg-blue-100 text-white-100 w-full"
-            >
-              <InitializeEscrow privateEscrowID={data.programID} />
-            </Button>
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-      </AlertDialogContent>
-    </AlertDialog>
+              <Button
+                onClick={onCreate}
+                className="ty-title p-3.5 border border-blue-50 bg-blue-100 text-white-100 w-full"
+              >
+                Initialize Escrow
+              </Button>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }
