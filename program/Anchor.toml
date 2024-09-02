@@ -5,10 +5,10 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-mediator_program = "7PySDr54fh8HTupqkRsABh9Hn1wEnjb3xE8jQ2wQMo6v"
+mediator_program = "5uouqLx1UjfdpepWpy9HuvkxxmbWBuS3iwSQBZbnGv5N"
 
 [programs.devnet]
-mediator_program = "GKpVM86Bt6aWcWihBAHVH7g9rYrU5XbcYzxuxZD8uMQu"
+mediator_program = "5uouqLx1UjfdpepWpy9HuvkxxmbWBuS3iwSQBZbnGv5N"
 
 [registry]
 url = "https://api.apr.dev"
