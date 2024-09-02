@@ -5,6 +5,15 @@ const nextConfig = {
     config.externals.push("pino-pretty", "encoding");
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "arweave.net",
+        port: "",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

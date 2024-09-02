@@ -326,14 +326,14 @@ const HeroSection = () => {
                         <div className="flex gap-2 items-center">
                           <div className="flex items-center pr-3 pl-1 py-1 gap-2 rounded-full bg-white-4">
                             <div className="flex border rounded-full border-white-16 p-1">
-                              {/* {data.mintA && (
+                              {data.mintA && (
                                 <Image
                                   src={data.mintA.metadata.uri}
                                   alt={data.mintA.metadata.name}
                                   width={16}
                                   height={16}
                                 />
-                              )} */}
+                              )}
                             </div>
                             <p className="ty-subheading text-white-100 max-w-[168px] text-ellipsis text-nowrap overflow-hidden">
                               {data.account.receive /
@@ -346,14 +346,14 @@ const HeroSection = () => {
                           <p className="ty-descriptions text-white-50">for</p>
                           <div className="flex items-center pr-3 pl-1 py-1 gap-2 rounded-full bg-white-4">
                             <div className="flex border rounded-full border-white-16 p-1">
-                              {/* {data.mintB && (
-                                  <Image
-                                    src={data.mintB.metadata.uri}
-                                    alt={data.mintB.metadata.name}
-                                    width={16}
-                                    height={16}
-                                  />
-                                )} */}
+                              {data.mintB && (
+                                <Image
+                                  src={data.mintB.metadata.uri}
+                                  alt={data.mintB.metadata.name}
+                                  width={16}
+                                  height={16}
+                                />
+                              )}
                             </div>
                             <p className="ty-subheading text-white-100 max-w-[168px] text-ellipsis text-nowrap overflow-hidden">
                               {data.account.receive /
