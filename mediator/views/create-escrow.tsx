@@ -324,8 +324,12 @@ export default function CreateEscrow() {
               </div>
             </div>
 
-            <Button onClick={onCreate}>Initialize Escrow</Button>
-            {/* <InitializeEscrow privateEscrowID={data.programID} /> */}
+            <Button
+              onClick={onCreate}
+              className="ty-title p-3.5 border border-blue-50 bg-blue-100 text-white-100 w-full"
+            >
+              <InitializeEscrow privateEscrowID={data.programID} />
+            </Button>
           </AlertDialogDescription>
         </AlertDialogHeader>
       </AlertDialogContent>

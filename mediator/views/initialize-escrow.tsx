@@ -4,25 +4,11 @@ import {
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Check, ChevronDown, Copy, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { useState } from "react";
 import formatString from "@/components/formatString";
 import { useToast } from "@/components/ui/use-toast";
@@ -36,9 +22,7 @@ const InitializeEscrow = ({ privateEscrowID }: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button
-          variant={"tokenDropdown"}
-          className="ty-title p-3.5 border border-blue-50 bg-blue-100 text-white-100 w-full">
+        <Button className="ty-title p-3.5 border border-blue-50 bg-blue-100 text-white-100 w-full">
           Initialize Escrow
         </Button>
       </AlertDialogTrigger>
@@ -48,7 +32,8 @@ const InitializeEscrow = ({ privateEscrowID }: Props) => {
             <div className="flex flex-col gap-4 items-center max-w-full w-full">
               <iframe
                 className="grow"
-                src="https://lottie.host/embed/ba2b34d7-1d0a-46f2-812b-9cd7ea99f489/n17jipZtBb.json"></iframe>
+                src="https://lottie.host/embed/ba2b34d7-1d0a-46f2-812b-9cd7ea99f489/n17jipZtBb.json"
+              ></iframe>
               <p className="ty-title text-white-100">
                 Escrow successfully initialized!
               </p>
@@ -68,14 +53,13 @@ const InitializeEscrow = ({ privateEscrowID }: Props) => {
                         variant: "good",
                         title: "Private Escrow ID copied to clipboard!",
                       });
-                    }}></Copy>
+                    }}
+                  ></Copy>
                 </div>
               </div>
 
               {/* button */}
-              <Button
-                variant={"tokenDropdown"}
-                className="ty-title p-3.5 border border-blue-50 bg-blue-100 text-white-100 w-full">
+              <Button className="ty-title p-3.5 border border-blue-50 bg-blue-100 text-white-100 w-full">
                 Continue
               </Button>
             </div>
