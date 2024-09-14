@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("GKpVM86Bt6aWcWihBAHVH7g9rYrU5XbcYzxuxZD8uMQu");
+declare_id!("5uouqLx1UjfdpepWpy9HuvkxxmbWBuS3iwSQBZbnGv5N");
 pub mod state;
 pub use state::*;
 
@@ -12,7 +12,7 @@ pub mod mediator_program {
 
     pub fn make(ctx: Context<Make>, seed: u64, receive: u64, deposit: u64) -> Result<()> {
         ctx.accounts.deposit(deposit)?;
-        ctx.accounts.save_escrow(seed, receive, &ctx.bumps)
+        ctx.accounts.save_escrow(seed, receive, deposit, &ctx.bumps)
     }
 
     pub fn take(ctx: Context<Take>) -> Result<()> {

@@ -12,6 +12,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AnchorProvider, BN, Program, Wallet } from "@coral-xyz/anchor";
 import { MediatorProgram, MediatorProgramIDL } from "@/lib/programs/idl";
 import { randomBytes } from "crypto";
+import { useEffect } from "react";
 
 interface ICreateEscrowArgs {
   mintA: PublicKey;
@@ -84,6 +85,10 @@ export default function useCreateEscrow() {
       return null;
     },
   });
+
+  useEffect(() => {
+    console.log(mutation.error);
+  }, [mutation.error]);
 
   return { ...mutation };
 }

@@ -670,6 +670,14 @@ export type MediatorProgramIDL = {
             type: "u64";
           },
           {
+            name: "deposit";
+            type: "u64";
+          },
+          {
+            name: "createdAt";
+            type: "i64";
+          },
+          {
             name: "bump";
             type: "u8";
           }
@@ -1111,6 +1119,14 @@ export const MediatorProgram: MediatorProgramIDL = {
           {
             name: "receive",
             type: "u64",
+          },
+          {
+            name: "deposit",
+            type: "u64",
+          },
+          {
+            name: "createdAt",
+            type: "i64",
           },
           {
             name: "bump",
