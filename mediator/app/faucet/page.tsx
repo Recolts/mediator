@@ -25,9 +25,25 @@ export default function Home() {
     <main className="flex flex-col relative">
       <Navbar />
 
-      <div className="flex flex-col gap-4">
-        <Button onClick={onMintUSDC}>Mint USDC</Button>
-        <Button onClick={onMintPYUSD}>Mint PYUSD</Button>
+      <div className="flex flex-col gap-4 p-4 md:p-8 lg:p-12 xl:p-16">
+        <Button
+          variant={"default"}
+          onClick={onMintUSDC}
+          className={
+            "ty-title p-3.5 text-white-100 bg-white-8 hover:bg-white-16 ease-out duration-300"
+          }
+        >
+          Mint USDC
+        </Button>
+        <Button
+          variant={"default"}
+          onClick={onMintPYUSD}
+          className={
+            "ty-title p-3.5 text-white-100 bg-white-8 hover:bg-white-16 ease-out duration-300"
+          }
+        >
+          Mint PYUSD
+        </Button>
       </div>
 
       <Footer />

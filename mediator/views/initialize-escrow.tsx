@@ -14,15 +14,17 @@ import { useState } from "react";
 import formatString from "@/components/formatString";
 import { useToast } from "@/components/ui/use-toast";
 
-interface IInitializeEscrowProps {
+interface InitializeEscrowProps {
   privateEscrowID: string;
   open: boolean;
+  setOpen: (open: boolean) => void;
 }
 
 const InitializeEscrow = ({
   privateEscrowID,
   open,
-}: IInitializeEscrowProps) => {
+  setOpen,
+}: InitializeEscrowProps) => {
   const { toast } = useToast();
   return (
     <AlertDialog open={open}>
@@ -59,9 +61,7 @@ const InitializeEscrow = ({
               </div>
 
               <Button
-                onClick={() => {
-                  window.location.reload();
-                }}
+                onClick={() => setOpen(false)}
                 className="ty-title p-3.5 border border-blue-50 bg-blue-100 text-white-100 w-full"
               >
                 Continue

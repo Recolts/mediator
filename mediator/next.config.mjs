@@ -11,6 +11,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "arweave.net",
         port: "",
+        pathname: "/mediator/views/hero-section.tsx",
       },
     ],
   },

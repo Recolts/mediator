@@ -68,6 +68,7 @@ export default function CreateEscrow() {
   const [fromMintOpen, setFromMintOpen] = useState(false);
   const [toMint, setToMint] = useState("");
   const [fromMint, setFromMint] = useState("");
+  const [open, setOpen] = useState(false);
   const { mutate, error, isPending, isSuccess } = useCreateEscrow();
 
   // TODO: use this mutate function
@@ -82,7 +83,11 @@ export default function CreateEscrow() {
 
   return (
     <>
-      <InitializeEscrow privateEscrowID={data.programID} open={isSuccess} />
+      <InitializeEscrow
+        privateEscrowID={data.programID}
+        open={isSuccess}
+        setOpen={setOpen}
+      />
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button variant={"button1"} className="ty-title p-3.5">
